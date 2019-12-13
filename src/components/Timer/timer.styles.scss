@@ -1,0 +1,28 @@
+
+.timer-container {
+    width: 30rem;
+    height: 30rem;
+    background-color: var(--timer-bg-color);
+    box-shadow:0 4px 36px 0 rgba(0, 0, 0, 0.212);
+    border-radius: 30rem;
+    overflow:hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  .timer-clock {
+    text-align: center;
+    color:#FFF;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2rem;
+    font-weight: 300;
+  
+  }
+  
+  .timer-buttons {
+    padding-bottom: 50px;
+  }
+    
