@@ -26,6 +26,8 @@ export default function Timer(props){
 
         if(nextExercise === null){
             setIsRunning(false)
+            setSeconds(seconds + 1) //timeremaining should be 0 after this. Triggers "great job"
+            textToSpeech("Great job", "Samantha")
         } else {
             if(isResting) {
                 textToSpeech(`Go. ${nextExercise}`)
@@ -37,7 +39,7 @@ export default function Timer(props){
             setSeconds(0);
         }
 
-    }, [isResting, nextExercise, alternate])
+    }, [isResting, nextExercise, alternate, seconds])
 
 
     const timer = useCallback(() => {
@@ -57,12 +59,7 @@ export default function Timer(props){
             return
         }
 
-        if (timeRemaining === 1 && nextExercise === null) {
-            textToSpeech("Great job", "Samantha")
-        // } else if (timeRemaining === 1) {
-        //     isResting ? textToSpeech("go") : textToSpeech("Rest", "Samantha");
-        } else if (timeRemaining <= 6) {
-            
+        if (timeRemaining <= 6) {    
             if(!isResting)
                 textToSpeech(timeRemaining - 1, "Samantha");
             else if (timeRemaining <= 4)
@@ -71,7 +68,7 @@ export default function Timer(props){
 
         setSeconds(seconds + 1)
         
-    }, [seconds, runTime, timeRemaining, precount, isResting, nextExercise, goPrecount, timeZero ])
+    }, [seconds, runTime, timeRemaining, precount, isResting, goPrecount, timeZero ])
     
     useEffect(
         () => {
@@ -124,17 +121,11 @@ export default function Timer(props){
                             }
                             {timerButtons}
                         </div>
-                :
-                    isNaN(runTime) ? <div className="timer-font">0 {timerButtons}</div>
-                    : 
-                        timeRemaining !== 0 ? <div className="timer-font">{timeRemaining}{timerButtons}</div>
-                        :
-                            nextExercise === null ? <div className="timer-font">GREAT JOB!</div>
-                            :
-                                isResting ? <div className="timer-font">GO{timerButtons}</div> 
-                                            : 
-                                            <div className="timer-font">0{timerButtons}</div>
-
+                : isNaN(runTime) ? <div className="timer-font">0 {timerButtons}</div>
+                    : timeRemaining !== 0 ? <div className="timer-font">{timeRemaining}{timerButtons}</div>
+                        : nextExercise === null ? <div className="timer-font">GREAT JOB!</div>
+                            : isResting ? <div className="timer-font">GO{timerButtons}</div> 
+                                : <div className="timer-font">0{timerButtons}</div>
                 }    
         </div>
     )
