@@ -28,9 +28,9 @@ export default function Timer(props){
             setIsRunning(false)
         } else {
             if(isResting) {
-                textToSpeech(nextExercise)
+                textToSpeech(`Go. ${nextExercise}`)
             } else {
-                textToSpeech(`Next up, ${nextExercise}`, "Samantha")
+                textToSpeech(`Rest. Next up, ${nextExercise}`, "Samantha")
             }
 
             alternate();
@@ -52,15 +52,15 @@ export default function Timer(props){
             return
         }
 
-        if(timeRemaining === 0) {
+        if(timeRemaining <= 1) {
             timeZero();
             return
         }
 
         if (timeRemaining === 1 && nextExercise === null) {
             textToSpeech("Great job", "Samantha")
-        } else if (timeRemaining === 1) {
-            isResting ? textToSpeech("go") : textToSpeech("Rest", "Samantha");
+        // } else if (timeRemaining === 1) {
+        //     isResting ? textToSpeech("go") : textToSpeech("Rest", "Samantha");
         } else if (timeRemaining <= 6) {
             
             if(!isResting)
