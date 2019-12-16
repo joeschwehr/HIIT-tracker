@@ -43,9 +43,11 @@
   margin-top: -.7rem;
 
   @media screen and (max-width: $sm) {
+    font-size: 3rem;
+  }
+  @media screen and (max-width: $xs) {
     font-size: 2rem;
   }
-
 }
 
 .clock-next-exercise {

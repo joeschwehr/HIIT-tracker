@@ -39,6 +39,11 @@
     align-items: center;
     padding-top: 10px;
 
+
+    @media screen and (max-width: $md) {
+      padding-top: 0px;
+      font-size: 10rem;
+    }
     @media screen and (max-width: $sm) {
       padding-top: 0px;
       font-size: 9rem;
