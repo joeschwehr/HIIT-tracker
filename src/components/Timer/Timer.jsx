@@ -112,21 +112,24 @@ export default function Timer(props){
     const isWorkingOut = (timeRemaining === 0 && nextExercise !== null && isResting) || (isRunning && !isResting && precount <=0 && timeRemaining >= 1);
 
     return (
-        <div className="timer-container" style={isWorkingOut ? {border: "5px solid var(--highlight-color"} : null}>
-                {precount >= 0 && isRunning ? 
-                        <div className="timer-font">
-                            {precount === 0 ? "GO"
-                                : precount <= 3 ? precount
-                                    : reset ? timeRemaining : "READY" //prevents flicker upon reset
-                            }
-                            {timerButtons}
-                        </div>
-                : isNaN(runTime) ? <div className="timer-font">0 {timerButtons}</div>
-                    : timeRemaining !== 0 ? <div className="timer-font">{timeRemaining}{timerButtons}</div>
-                        : nextExercise === null ? <div className="timer-font">GREAT JOB!</div>
-                            : isResting ? <div className="timer-font">GO{timerButtons}</div> 
-                                : <div className="timer-font">0{timerButtons}</div>
-                }    
+        <div 
+            className="timer-gradient-wrapper"
+            style={isWorkingOut ? {background: "linear-gradient(200deg, var(--highlight-color), var(--deeper-color))"} : null} 
+        >
+            <div className="timer-container">
+                    {precount >= 0 && isRunning ? 
+                            precount === 0 ? <div className="timer-font">GO{timerButtons}</div>
+                                    : precount <= 3 ? <div className="timer-font">{precount}{timerButtons}</div>
+                                        : reset ? <div className="timer-font">{timeRemaining}{timerButtons}</div>
+                                            : <div className="timer-fancy">Let's go!</div> //prevents flicker upon reset
+                                            
+                    : isNaN(runTime) ? <div className="timer-font">0 {timerButtons}</div>
+                        : timeRemaining !== 0 ? <div className="timer-font">{timeRemaining}{timerButtons}</div>
+                            : nextExercise === null ? <div className="timer-fancy">GREAT JOB!</div>
+                                : isResting ? <div className="timer-font">GO{timerButtons}</div> 
+                                    : <div className="timer-font">0{timerButtons}</div>
+                    }    
+            </div>
         </div>
     )
 }

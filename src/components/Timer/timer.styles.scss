@@ -1,17 +1,26 @@
 @import "../_globals.scss";
 
+.timer-gradient-wrapper {
+  background: linear-gradient(-30deg, var(--timer-bg-color), var(--neon-green));
+  border-radius: 500rem;
+  padding: 3px;
+  box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.212);
+
+  @media screen and (max-width: $sm) {
+    padding: 2px;
+  }
+}
+
 .timer-container {
     width: 350px;
     height: 350px;
     padding: 15px;
-    background-color: rgba(255, 255, 255, 0.10);
-    border: solid 5px var(--timer-bg-color);
-    box-shadow:0 4px 36px 0 rgba(0, 0, 0, 0.212);
+    background-color: var(--background-color-lighter);
     border-radius: 500rem;
-    overflow:hidden;
     display: flex;
     align-items: center;
-    overflow: visible;
+    justify-content: center;
+    // overflow: visible;
 
     @media screen and (max-width: $sm) {
       width: 320px;
@@ -38,7 +47,7 @@
     flex-direction: column;
     align-items: center;
     padding-top: 10px;
-
+    line-height: 1.25;
 
     @media screen and (max-width: $md) {
       padding-top: 0px;
@@ -50,6 +59,33 @@
     }
     @media screen and (max-width: $xs) {
       font-size: 5rem;
+    }
+  }
+
+  .timer-fancy {
+    text-align: center;
+    font-family: 'Bangers', cursive;
+    letter-spacing: .3rem;
+    font-size: 12rem;
+    font-weight: 700;
+    padding: 3rem;
+    background: linear-gradient(45deg, var(--deeper-color) 30%, var(--highlight-color) 90%);
+    line-height: .85;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+
+    @media screen and (max-width: $md) {
+      padding: 2rem;
+      font-size: 11rem;
+    }
+    @media screen and (max-width: $sm) {
+      font-size: 9rem;
+    }
+    @media screen and (max-width: $xs) {
+      font-size: 7rem;
     }
   }
   
