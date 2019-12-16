@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/HIIT-tracker/static/css/main.66ee09c2.chunk.css",
-    "main.js": "/HIIT-tracker/static/js/main.18ada588.chunk.js",
-    "main.js.map": "/HIIT-tracker/static/js/main.18ada588.chunk.js.map",
+    "main.css": "/HIIT-tracker/static/css/main.363a382c.chunk.css",
+    "main.js": "/HIIT-tracker/static/js/main.ff1103b1.chunk.js",
+    "main.js.map": "/HIIT-tracker/static/js/main.ff1103b1.chunk.js.map",
     "runtime-main.js": "/HIIT-tracker/static/js/runtime-main.f6401743.js",
     "runtime-main.js.map": "/HIIT-tracker/static/js/runtime-main.f6401743.js.map",
     "static/js/2.ed50a33b.chunk.js": "/HIIT-tracker/static/js/2.ed50a33b.chunk.js",
     "static/js/2.ed50a33b.chunk.js.map": "/HIIT-tracker/static/js/2.ed50a33b.chunk.js.map",
     "index.html": "/HIIT-tracker/index.html",
-    "precache-manifest.85d21534635088de913b738f5ebba69d.js": "/HIIT-tracker/precache-manifest.85d21534635088de913b738f5ebba69d.js",
+    "precache-manifest.f8041088f8abc9bd7239b2dfd8923966.js": "/HIIT-tracker/precache-manifest.f8041088f8abc9bd7239b2dfd8923966.js",
     "service-worker.js": "/HIIT-tracker/service-worker.js",
-    "static/css/main.66ee09c2.chunk.css.map": "/HIIT-tracker/static/css/main.66ee09c2.chunk.css.map",
+    "static/css/main.363a382c.chunk.css.map": "/HIIT-tracker/static/css/main.363a382c.chunk.css.map",
     "static/js/2.ed50a33b.chunk.js.LICENSE": "/HIIT-tracker/static/js/2.ed50a33b.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.f6401743.js",
     "static/js/2.ed50a33b.chunk.js",
-    "static/css/main.66ee09c2.chunk.css",
-    "static/js/main.18ada588.chunk.js"
+    "static/css/main.363a382c.chunk.css",
+    "static/js/main.ff1103b1.chunk.js"
   ]
 }
