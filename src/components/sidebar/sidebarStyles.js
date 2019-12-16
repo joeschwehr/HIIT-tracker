@@ -8,7 +8,6 @@ export default makeStyles({
       padding: '0 30px',
     }, 
     btn: {
-      height: "4vh",
       padding: "10px 20px",
       textTransform: "uppercase",
       fontSize: ".7rem",
