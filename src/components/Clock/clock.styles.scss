@@ -1,3 +1,5 @@
+@import "../_globals.scss";
+
 .clock-container {
   display: flex;
   flex-direction: column;
@@ -11,7 +13,7 @@
   justify-content: center;
 }
 
-.clock-button-container {
+.clock-start-over-container {
   display: flex;
   height: 4vh;
 }
@@ -25,11 +27,13 @@
 }
 
 .clock-current-exercise {
+  font-stretch: condensed;
   text-align: center;
   display: flex;
   align-items: center;
   padding: 15px;
-  height: 50px;
+  line-height: .8;
+  margin-top: -.1rem;
 }
 
 .clock-exercise {
@@ -37,13 +41,18 @@
   letter-spacing: 0.05rem;
   font-size: 4rem;
   margin-top: -.7rem;
+
+  @media screen and (max-width: $sm) {
+    font-size: 2rem;
+  }
+
 }
 
 .clock-next-exercise {
   font-weight: 900;
   letter-spacing: 0.05rem;
   font-size: 2rem;
-  margin-top: -.3rem;
+  margin-top: -.1rem;
 }
 
 .clock-button {

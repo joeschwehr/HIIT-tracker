@@ -13,11 +13,15 @@
 
   --timer-bg-color: #2d74a3;
   --neon-green: #61dafb;
+  --xs: 575.98;
+  --sm: 767.98;
+  --md: 991.98;
+  --lg: 1199.98;
 }
 
 .App {
   background-color: var(--background-color);
-  font-size: calc(10px + 2vmin);
+  /* font-size: calc(10px + 2vmin); */
   color: white;
   min-height: 100vh;
   display: flex;

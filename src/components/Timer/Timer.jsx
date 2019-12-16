@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from "react";
 import PauseIcon from '@material-ui/icons/PauseCircleFilled';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import textToSpeech from "../speech.helper"
 import "./timer.styles.scss"
 
@@ -100,13 +100,13 @@ export default function Timer(props){
     const timerButtons =  <div className="timer-buttons">
                             <div className="icon-button">
                                 {!isRunning ? 
-                                    <PlayArrowIcon fontSize="large" onClick={start}/> 
+                                    <PlayCircleFilledIcon fontSize="large" onClick={start}/> 
                                     :
                                     <PauseIcon fontSize="large" onClick={stop}/>
                                 }
                             </div>
                             
-                            <button className="timer-button" onClick={resetWorkout}>RESET CLOCK</button>
+                            <button className="timer-reset" onClick={resetWorkout}>RESET CLOCK</button>
                          </div>
     
     const isWorkingOut = (timeRemaining === 0 && nextExercise !== null && isResting) || (isRunning && !isResting && precount <=0 && timeRemaining >= 1);

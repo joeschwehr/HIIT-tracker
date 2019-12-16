@@ -1,3 +1,4 @@
+import sizes from "../sizes"
 
 export default {
   '@global': {
@@ -23,7 +24,8 @@ export default {
     
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, .15)",
-    }
+    },
+
   },
   
   itemDragged: {
@@ -40,6 +42,10 @@ export default {
     height: "46px",
     display: "flex",
     alignItems: "center",
+
+    [sizes.down("lg")]: {
+        marginLeft: "10px"
+    },
   },
 
   iconContainer: {
@@ -48,12 +54,16 @@ export default {
 
   editIcon: {
       color: "rgba(255, 255, 255, 0.301)",
-      marginRight: "20px",
+      marginRight: "17px",
       zIndex: "20",
       transition: "all .3s",
   
       "&:hover": {
           color: "white",
+      },
+
+      [sizes.down("lg")]: {
+          marginRight: "14px"
       },
   },
 
@@ -99,11 +109,19 @@ export default {
       width: "100%",
       zIndex: 10,
       position: "absolute",
+      marginTop: "2px",
+
+      [sizes.down("lg")]: {
+        left: "5px",
+        opacity: "40%",
+        width: "25px",
+    },
       
       "&:hover": {
           cursor: "all-scroll",
         },
   },
+
   
 }
 

@@ -76,13 +76,13 @@ export default function Watch(props){
                 <div className="clock-up-next">
                     {nextExercise === null ? " " : 
                         <div>
-                            Up Next
+                            Next Up
                             <div className="clock-next-exercise">{nextExercise}</div>
                         </div>
                     }
                 </div>
             </div>
-            <div className="clock-button-container">
+            <div className="clock-start-over-container">
                 <button className="clock-button" onClick={resetWorkout}>Start Over</button>
             </div>
         </div> 

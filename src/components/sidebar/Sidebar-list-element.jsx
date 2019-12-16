@@ -66,10 +66,10 @@ class SidebarListElement extends React.Component {
             }}
           >
 
-
             <div className={classes.dragHandle} {...dragHandleProps}> 
-              <DragIndicatorIcon /> 
+              <DragIndicatorIcon fontSize="small"/> 
             </div>
+
             <div className={classes.title}>{ item.name }</div>
             <ListItemIcon className={classes.iconContainer}>
               <EditIcon 
