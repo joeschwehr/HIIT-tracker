@@ -83,7 +83,7 @@ export default function Watch(props){
                 </div>
             </div>
             <div className="clock-start-over-container">
-                <button className="clock-button" onClick={resetWorkout}>Start Over</button>
+                <button className="clock-button" onClick={resetWorkout}>Restart Workout</button>
             </div>
         </div> 
     )
