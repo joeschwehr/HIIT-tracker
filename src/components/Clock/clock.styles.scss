@@ -3,4 +3,66 @@
   flex-direction: column;
   align-items: center;
   margin: auto;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  font-size: .8rem;
+  color: white;
+  height: 92vh;
+  justify-content: center;
+}
+
+.clock-button-container {
+  display: flex;
+  height: 4vh;
+}
+
+.clock-up-next {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  height: 50px;
+}
+
+.clock-current-exercise {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  height: 50px;
+}
+
+.clock-exercise {
+  font-weight: 900;
+  letter-spacing: 0.05rem;
+  font-size: 4rem;
+  margin-top: -.7rem;
+}
+
+.clock-next-exercise {
+  font-weight: 900;
+  letter-spacing: 0.05rem;
+  font-size: 2rem;
+  margin-top: -.3rem;
+}
+
+.clock-button {
+  color: var(--highlight-dim);
+  text-transform: uppercase;
+  background-color: rgba(255, 255, 255, 0);
+  outline: none;
+  border: none;
+  padding: 0 15px 15px 15px;
+  margin: 2px auto;
+  letter-spacing: .1rem;
+  font-size: .7rem;
+  transition: all .4s ease-in-out;
+  border-radius: 5px;
+  width: 8rem;
+
+    &:hover{
+      cursor: pointer;
+      color: var(--highlight-color);
+      letter-spacing: .15rem;
+    }
 }

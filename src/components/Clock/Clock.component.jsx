@@ -7,6 +7,7 @@ export default function Watch(props){
     const [isResting, setIsResting] = useState(false);
     const [index, setIndex] = useState(0);
     const [precount, setPrecount] = useState(4);
+    const [reset, setReset] = useState(false);
 
     let currentExercise = "";
     let nextExercise = "";
@@ -28,25 +29,40 @@ export default function Watch(props){
         setIndex(0);
         setPrecount(4);
         setIsResting(false);
+        setReset(true);
+        setTimeout(() => setReset(false), 250)
     }
 
     if(index < exerciseList.length){
         currentExercise = exerciseList[index].name;
 
         if(exerciseList.length === 1 || index + 1 === exerciseList.length){
-            nextExercise = "Celebrate"
+            nextExercise = null
         } else {
             nextExercise = exerciseList[index + 1].name
         }
     } else {
         time = "stop"
     }
+
+
+    let exerciseIndexMsg = `${index + 1}/${exerciseList.length}`
+    let currentExerciseMsg = <div className="clock-exercise">
+                                {isResting ? "Rest" : currentExercise}
+                            </div>
+
+    if(index >= exerciseList.length){
+        exerciseIndexMsg = `${index}/${exerciseList.length}`;
+        currentExerciseMsg = ""
+    }
     
     return (
-        index < exerciseList.length ? 
+        <div>
             <div className="clock-container">
-                <div> {index + 1}/{exerciseList.length}</div>
-                <div>Current: {isResting ? "Rest" : currentExercise}</div>
+                <div>{exerciseIndexMsg}</div>
+                <div className="clock-current-exercise">
+                    {currentExerciseMsg}
+                </div>
                 <Timer 
                     runTime={time} 
                     alternate={alternateBetweenResting} 
@@ -55,24 +71,20 @@ export default function Watch(props){
                     isResting={isResting}
                     currentExercise={currentExercise}
                     nextExercise={nextExercise}
-                    resetWorkout={resetWorkout}
+                    reset={reset}
                 />
-                <div>Next: {nextExercise}</div>
-            </div> 
-        :
-            <div className="clock-container">
-                <div> {index}/{exerciseList.length}</div>
-                <div>Done</div>
-                <Timer 
-                    runTime={time} 
-                    alternate={alternateBetweenResting} 
-                    precount={precount} 
-                    setPrecount={setPrecount} 
-                    isResting={isResting}
-                    currentExercise={currentExercise}
-                    nextExercise={nextExercise}
-                    resetWorkout={resetWorkout}
-                />
-            </div> 
+                <div className="clock-up-next">
+                    {nextExercise === null ? " " : 
+                        <div>
+                            Up Next
+                            <div className="clock-next-exercise">{nextExercise}</div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div className="clock-button-container">
+                <button className="clock-button" onClick={resetWorkout}>Start Over</button>
+            </div>
+        </div> 
     )
 }

@@ -1,75 +1,90 @@
 import React, {useState, useEffect, useCallback} from "react";
+import PauseIcon from '@material-ui/icons/PauseCircleFilled';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import textToSpeech from "../speech.helper"
 import "./timer.styles.scss"
 
 export default function Timer(props){
-    const { runTime, alternate, isResting, precount, setPrecount, nextExercise, currentExercise, resetWorkout } = props;
+    const { runTime, alternate, isResting, precount, setPrecount, nextExercise, currentExercise, reset } = props;
     const [isRunning, setIsRunning] = useState(false);
     const [seconds, setSeconds] = useState(0);
     const timeRemaining = runTime - seconds;
 
-    const timer = useCallback(() => {
+    const goPrecount = useCallback(() => {
 
-        if(precount > 0) {
+        if(precount === 1)
+            textToSpeech(`Go. ${currentExercise}`);
+        else if (precount > 0)
+            textToSpeech(precount - 1);
 
-            if(precount > 3){
-                textToSpeech('three');
-            } else if(precount === 3){
-                textToSpeech('two');
-            } else if(precount === 2){
-                textToSpeech('one');
-            } else {
-                textToSpeech(`Go. ${currentExercise}`);
-            }
+        setPrecount(precount - 1);
+        
+    }, [currentExercise, precount, setPrecount])
 
-            setPrecount(precount - 1)
-            return
-        } 
 
-        if(runTime === "stop"){
-            stop();
-            return
-        }
+    const timeZero = useCallback(() => {
 
-        if(timeRemaining === 0){
-            if(isResting){
+        if(nextExercise === null){
+            setIsRunning(false)
+        } else {
+            if(isResting) {
                 textToSpeech(nextExercise)
             } else {
-                textToSpeech(`Next up, ${nextExercise}`)
+                textToSpeech(`Next up, ${nextExercise}`, "Samantha")
             }
 
             alternate();
             setSeconds(0);
+        }
+
+    }, [isResting, nextExercise, alternate])
+
+
+    const timer = useCallback(() => {
+
+        if(precount >= 0) {
+            goPrecount();
+            return
+        } 
+
+        if(runTime === "stop") {
+            stop();
             return
         }
+
+        if(timeRemaining === 0) {
+            timeZero();
+            return
+        }
+
+        if (timeRemaining === 1 && nextExercise === null) {
+            textToSpeech("Great job", "Samantha")
+        } else if (timeRemaining === 1) {
+            isResting ? textToSpeech("go") : textToSpeech("Rest", "Samantha");
+        } else if (timeRemaining <= 6) {
+            
+            if(!isResting)
+                textToSpeech(timeRemaining - 1, "Samantha");
+            else if (timeRemaining <= 4)
+                textToSpeech(timeRemaining - 1);
+        } 
 
         setSeconds(seconds + 1)
-
-        if(timeRemaining > 6){
-            return
-        } else if (timeRemaining === 6 && !isResting){
-            textToSpeech('five');
-        } else if(timeRemaining === 5 && !isResting){
-            textToSpeech('four');
-        } else if(timeRemaining === 4){
-            textToSpeech('three');
-        } else if(timeRemaining === 3){
-            textToSpeech('two');
-        } else if(timeRemaining === 2){
-            textToSpeech('one');
-        } else if (timeRemaining === 1 && isResting){
-            textToSpeech('go');
-        }
-    }, [seconds, runTime, alternate, timeRemaining, precount, isResting, setPrecount, nextExercise, currentExercise])
+        
+    }, [seconds, runTime, timeRemaining, precount, isResting, nextExercise, goPrecount, timeZero ])
     
     useEffect(
         () => {
+            if(reset) {
+                resetWorkout();
+                return
+            }
+
             if(isRunning){
                 const id = setInterval(timer, 1000);
                 return () => clearInterval(id);
             }
-        },
-        [isRunning, timer]
+        }, [isRunning, timer, reset]
     );
 
     const start = () => {
@@ -80,36 +95,47 @@ export default function Timer(props){
         setIsRunning(false)
     }
 
-    const reset = () => {
+    const resetWorkout = () => {
         setIsRunning(false)
         setSeconds(0);
     }
 
-    const handleReset = () => {
-        resetWorkout();
-        reset();
-    }
+    const timerButtons =  <div className="timer-buttons">
+                            <div className="icon-button">
+                                {!isRunning ? 
+                                    <PlayArrowIcon fontSize="large" onClick={start}/> 
+                                    :
+                                    <PauseIcon fontSize="large" onClick={stop}/>
+                                }
+                            </div>
+                            
+                            <button className="timer-button" onClick={resetWorkout}>RESET CLOCK</button>
+                         </div>
+    
+    const isWorkingOut = (timeRemaining === 0 && nextExercise !== null && isResting) || (isRunning && !isResting && precount <=0 && timeRemaining >= 1);
 
     return (
-        <div className="timer-container">
-            <div className="timer-clock">
-                {precount > 0 && isRunning ? 
-                    <div>
-                        {precount > 3 ? "START" : precount}
-                    </div>
+        <div className="timer-container" style={isWorkingOut ? {border: "5px solid var(--highlight-color"} : null}>
+                {precount >= 0 && isRunning ? 
+                        <div className="timer-font">
+                            {precount === 0 ? "GO"
+                                : precount <= 3 ? precount
+                                    : reset ? timeRemaining : "READY" //prevents flicker upon reset
+                            }
+                            {timerButtons}
+                        </div>
                 :
-                    <div>
-                        {!isNaN(runTime) ? timeRemaining : 0}
-                    </div>
-                }    
-                <div className="timer-buttons">
-                    <button onClick={start}>Start</button>
-                    <button onClick={stop}>Stop</button>
-                    <button onClick={reset}>Reset Timer</button>
-                    <button onClick={handleReset}>Restart Workout</button>
+                    isNaN(runTime) ? <div className="timer-font">0 {timerButtons}</div>
+                    : 
+                        timeRemaining !== 0 ? <div className="timer-font">{timeRemaining}{timerButtons}</div>
+                        :
+                            nextExercise === null ? <div className="timer-font">GREAT JOB!</div>
+                            :
+                                isResting ? <div className="timer-font">GO{timerButtons}</div> 
+                                            : 
+                                            <div className="timer-font">0{timerButtons}</div>
 
-                </div>
-            </div>
+                }    
         </div>
     )
 }
