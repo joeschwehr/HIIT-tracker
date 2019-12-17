@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/HIIT-tracker/static/css/main.d027b648.chunk.css",
+    "main.css": "/HIIT-tracker/static/css/main.b9019dbc.chunk.css",
     "main.js": "/HIIT-tracker/static/js/main.0d460ec0.chunk.js",
     "main.js.map": "/HIIT-tracker/static/js/main.0d460ec0.chunk.js.map",
     "runtime-main.js": "/HIIT-tracker/static/js/runtime-main.f6401743.js",
@@ -8,15 +8,15 @@
     "static/js/2.45206bb7.chunk.js": "/HIIT-tracker/static/js/2.45206bb7.chunk.js",
     "static/js/2.45206bb7.chunk.js.map": "/HIIT-tracker/static/js/2.45206bb7.chunk.js.map",
     "index.html": "/HIIT-tracker/index.html",
-    "precache-manifest.b3dfca9b1e565d01dce7358c8f983c34.js": "/HIIT-tracker/precache-manifest.b3dfca9b1e565d01dce7358c8f983c34.js",
+    "precache-manifest.4eec1d3791f37e826c16ce213f0e2229.js": "/HIIT-tracker/precache-manifest.4eec1d3791f37e826c16ce213f0e2229.js",
     "service-worker.js": "/HIIT-tracker/service-worker.js",
-    "static/css/main.d027b648.chunk.css.map": "/HIIT-tracker/static/css/main.d027b648.chunk.css.map",
+    "static/css/main.b9019dbc.chunk.css.map": "/HIIT-tracker/static/css/main.b9019dbc.chunk.css.map",
     "static/js/2.45206bb7.chunk.js.LICENSE": "/HIIT-tracker/static/js/2.45206bb7.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.f6401743.js",
     "static/js/2.45206bb7.chunk.js",
-    "static/css/main.d027b648.chunk.css",
+    "static/css/main.b9019dbc.chunk.css",
     "static/js/main.0d460ec0.chunk.js"
   ]
 }
