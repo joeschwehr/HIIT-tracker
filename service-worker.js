@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/HIIT-tracker/precache-manifest.f8041088f8abc9bd7239b2dfd8923966.js"
+  "/HIIT-tracker/precache-manifest.462250ea3fb551cb04071aeccea3b8bb.js"
 );
 
 self.addEventListener('message', (event) => {
