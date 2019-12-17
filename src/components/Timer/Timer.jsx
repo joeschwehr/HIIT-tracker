@@ -97,17 +97,14 @@ export default function Timer(props){
         setSeconds(0);
     }
 
-    const timerButtons =  <div className="timer-buttons">
-                            <div className="icon-button">
+    const timerButtons =  <div className="icon-button">
                                 {!isRunning ? 
                                     <PlayCircleFilledIcon fontSize="large" onClick={start}/> 
                                     :
                                     <PauseIcon fontSize="large" onClick={stop}/>
                                 }
                             </div>
-                            
-                            <button className="timer-reset" onClick={resetWorkout}>RESET CLOCK</button>
-                         </div>
+                        
     
     const isWorkingOut = (timeRemaining === 0 && nextExercise !== null && isResting) || (isRunning && !isResting && precount <=0 && timeRemaining >= 1);
 
