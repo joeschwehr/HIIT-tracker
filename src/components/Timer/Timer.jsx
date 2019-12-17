@@ -97,7 +97,7 @@ export default function Timer(props){
         setSeconds(0);
     }
 
-    const timerButtons =  <div className="icon-button">
+    const timerButtons =    <div className="icon-button">
                                 {!isRunning ? 
                                     <PlayCircleFilledIcon fontSize="large" onClick={start}/> 
                                     :

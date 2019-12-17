@@ -58,6 +58,8 @@ export default function Watch(props){
     
     return (
         <div>
+            {/* <button className="clock-button" onClick={resetWorkout}>Restart Workout</button> */}
+
             <div className="clock-container">
                 <div>{exerciseIndexMsg}</div>
                 <div className="clock-current-exercise">

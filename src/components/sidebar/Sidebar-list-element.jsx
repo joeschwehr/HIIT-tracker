@@ -2,11 +2,9 @@ import React from 'react';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { withStyles } from '@material-ui/core/styles';
 
-import styles from "./Sidebar-list-element.styles.js"
+import "./Sidebar-list-element.scss"
     
 class SidebarListElement extends React.Component {
   constructor(props){
@@ -42,50 +40,45 @@ class SidebarListElement extends React.Component {
       const scale = (itemSelected * 0.05) + 1;
       const shadow = itemSelected * 15 + 1;
       const dragged = itemSelected !== 0;
-      const { classes } = this.props;
       
       return (
         isEditing ? 
-          <form onSubmit={handleSubmit} className={classes.form}>
+          <form onSubmit={handleSubmit} className="list-element-form">
             <input 
               type="text"
-              className={classes.input} 
+              className="list-element-input" 
               value={editedExercise} 
               onChange={handleChange}
               autoFocus
             >
             </input>
-            <button className={classes.updateBtn}> <CheckCircleIcon /> </button>
+            <button className="list-element-update-btn"> <CheckCircleIcon /> </button>
           </form>
         : 
           <div
-            className={dragged ? classes.itemDragged : classes.item}
+            className={dragged ? "itemDragged" : "item"}
             style={{
               transform: `scale(${scale})`,
               boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`
             }}
           >
 
-            <div className={classes.dragHandle} {...dragHandleProps}> 
+            <div className="dragHandle" {...dragHandleProps}> 
               <DragIndicatorIcon fontSize="small"/> 
             </div>
 
-            <div className={classes.title}>{ item.name }</div>
-            <ListItemIcon className={classes.iconContainer}>
-              <EditIcon 
-                className={classes.editIcon} 
-                fontSize="small"
-                onClick={handleEdit}
-              />
-              <DeleteIcon
-                className={classes.editIcon} 
-                fontSize="small"
-                onClick={handleRemove}
-              />
-            </ListItemIcon>
+            <div className="list-element-title">{ item.name }</div>
+            <div className="list-element-icon-container">
+              <div className="list-element-icon" onClick={handleEdit}> 
+                <EditIcon fontSize="small"/>
+              </div>
+              <div className="list-element-icon" onClick={handleRemove}>
+                <DeleteIcon fontSize="small"/>
+              </div>
+            </div>
           </div>
     );
   }
 }
 
-export default withStyles(styles)(SidebarListElement);
+export default SidebarListElement;
