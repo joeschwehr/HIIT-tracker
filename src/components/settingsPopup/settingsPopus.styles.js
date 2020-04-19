@@ -120,7 +120,8 @@ export default makeStyles({
 
         'label + .MuiInput-formControl': {
             marginTop: '0px',
-            marginLeft: '0px'
+            marginLeft: '0px',
+            caretColor: 'var(--popup-underline)'
         },
 
         '.MuiFormControl-root': {

@@ -30,6 +30,8 @@ export default makeStyles({
         },
         '.MuiInputBase-input': {
             color: 'var(--popup-title)',
+            caretColor: 'var(--popup-underline)',
+
             letterSpacing: '.3px'
         },
         '.MuiInputLabel-root.Mui-focused': {
