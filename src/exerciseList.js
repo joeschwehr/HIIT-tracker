@@ -11,7 +11,7 @@ export default [
     { id: uuid(), name: 'Plank' },
     { id: uuid(), name: 'High-Knees Running' },
     { id: uuid(), name: 'Lunges' },
-    { id: uuid(), name: 'Push-ups with rotation' },
+    { id: uuid(), name: 'Push-ups With Rotation' },
     { id: uuid(), name: 'Side Plank 1' },
     { id: uuid(), name: 'Side Plank 2' }
 ];
