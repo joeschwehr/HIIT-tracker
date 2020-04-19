@@ -1,41 +1,21 @@
-:root {
-  --background-color: #282c34;
-  --background-color-lighter: #2f333d;
-
-  --deeper-color: rgb(254, 107, 139);
-  --highlight-color: rgb(255, 142, 83);
-  --highlight-dim: rgba(255, 142, 83, .6);
-
-  --popup-underline: var(--highlight-color);
-  --popup-btn-text: var(--highlight-color);
-  --popup-text: rgba(255, 255, 255, .5);
-  --popup-title: white;
-  --popup-bg: rgb(60,60,60);
-
-  --timer-bg-color: #2d74a3;
-  --neon-green: #61dafb;
-  --xs: 575.98;
-  --sm: 767.98;
-  --md: 991.98;
-  --lg: 1199.98;
+.App {
+    background-color: var(--background-color);
+    /* font-size: calc(10px + 2vmin); */
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.App {
-  background-color: var(--background-color);
-  /* font-size: calc(10px + 2vmin); */
-  color: white;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+@media (max-width: 700px) {
+    .App {
+        height: 85vh;
+        justify-content: flex-start;
+    }
 }
 
 .MuiDrawer-root .MuiDrawer-paperAnchorLeft {
-  background: linear-gradient(45deg, var(--deeper-color) 30%, var(--highlight-color) 90%);
+    background: linear-gradient(45deg, var(--deeper-color) 30%, var(--highlight-color) 90%);
 }
-
-
-
-
-

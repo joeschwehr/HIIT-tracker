@@ -3,7 +3,10 @@ import './App.css';
 import Sidebar from './components/sidebar/Sidebar';
 import AddNewPopup from './components/addNew-popup/addNewPopup';
 import SettingsPopup from './components/settingsPopup/settingsPopup';
+import ConfirmPopup from './components/confirmPopup/confirmPopup';
+
 import Clock from './components/Clock/Clock.component.jsx';
+import { voiceInit } from './components/speech.helper';
 
 import exerciseList from './exerciseList';
 import uuid from 'uuid/v4';
@@ -16,8 +19,13 @@ class App extends React.Component {
             workoutInterval: JSON.parse(window.localStorage.getItem('workoutInterval')) || 30,
             restInterval: JSON.parse(window.localStorage.getItem('restInterval')) || 10,
             isIntervalDialogOpen: false,
-            isAddNewDialogOpen: false
+            isAddNewDialogOpen: false,
+            isConfirmDialogOpen: false
         };
+    }
+
+    componentDidMount() {
+        voiceInit(); // preload voices
     }
 
     onListChange = newList => {
@@ -28,17 +36,22 @@ class App extends React.Component {
     openAddNew = () => {
         this.setState({ isAddNewDialogOpen: true });
     };
-
-    openSettingsWindow = () => {
-        this.setState({ isIntervalDialogOpen: true });
-    };
-
     closeAddNewPopup = () => {
         this.setState({ isAddNewDialogOpen: false });
     };
 
+    openSettingsWindow = () => {
+        this.setState({ isIntervalDialogOpen: true });
+    };
     closeSettingsWindow = () => {
         this.setState({ isIntervalDialogOpen: false });
+    };
+
+    openConfirmPopup = () => {
+        this.setState({ isConfirmDialogOpen: true });
+    };
+    closeConfirmPopup = () => {
+        this.setState({ isConfirmDialogOpen: false });
     };
 
     addNewExercise = newExercise => {
@@ -46,7 +59,6 @@ class App extends React.Component {
         this.setState({ exerciseList: updatedList });
         window.localStorage.setItem('exerciseList', JSON.stringify(updatedList));
     };
-
     removeExercise = exerciseToRemove => {
         const updatedList = this.state.exerciseList.filter(
             exercise => exercise.id !== exerciseToRemove.id
@@ -54,7 +66,6 @@ class App extends React.Component {
         this.setState({ exerciseList: updatedList });
         window.localStorage.setItem('exerciseList', JSON.stringify(updatedList));
     };
-
     editExercise = updatedExercise => {
         const existingList = this.state.exerciseList;
         const updatedList = existingList.map(exercise => {
@@ -75,25 +86,26 @@ class App extends React.Component {
         window.localStorage.setItem('restInterval', JSON.stringify(restInterval));
     };
 
-    reset = () => {
+    resetExercises = () => {
         this.setState({ exerciseList: exerciseList });
         window.localStorage.setItem('exerciseList', JSON.stringify(exerciseList));
     };
 
-    resetAll = () => {
-        this.setState({ exerciseList: exerciseList });
-        window.localStorage.setItem('exerciseList', JSON.stringify(exerciseList));
+    // resetAll = () => {
+    //     this.setState({ exerciseList: exerciseList });
+    //     window.localStorage.setItem('exerciseList', JSON.stringify(exerciseList));
 
-        this.setState({ workoutInterval: 30, restInterval: 10 });
-        window.localStorage.setItem('workoutInterval', JSON.stringify(30));
-        window.localStorage.setItem('restInterval', JSON.stringify(10));
-    };
+    //     this.setState({ workoutInterval: 30, restInterval: 10 });
+    //     window.localStorage.setItem('workoutInterval', JSON.stringify(30));
+    //     window.localStorage.setItem('restInterval', JSON.stringify(10));
+    // };
 
     render() {
         const {
             exerciseList,
             isAddNewDialogOpen,
             isIntervalDialogOpen,
+            isConfirmDialogOpen,
             workoutInterval,
             restInterval
         } = this.state;
@@ -104,12 +116,14 @@ class App extends React.Component {
             addNewExercise,
             openSettingsWindow,
             closeSettingsWindow,
+            openConfirmPopup,
+            closeConfirmPopup,
             updateIntervals,
             removeExercise,
-            reset,
-            resetAll,
+            resetExercises,
             editExercise
         } = this;
+
         return (
             <div className='App'>
                 <Sidebar
@@ -117,9 +131,9 @@ class App extends React.Component {
                     onListChange={onListChange}
                     addNew={openAddNew}
                     openSettingsWindow={openSettingsWindow}
+                    openConfirmPopup={openConfirmPopup}
                     removeExercise={removeExercise}
-                    reset={reset}
-                    resetAll={resetAll}
+                    resetExercises={resetExercises}
                     editExercise={editExercise}
                 />
                 {isAddNewDialogOpen && (
@@ -131,6 +145,9 @@ class App extends React.Component {
                         intervals={{ w: workoutInterval, r: restInterval }}
                         updateIntervals={updateIntervals}
                     />
+                )}
+                {isConfirmDialogOpen && (
+                    <ConfirmPopup closePopup={closeConfirmPopup} resetExercises={resetExercises} />
                 )}
                 <Clock
                     exerciseList={exerciseList}

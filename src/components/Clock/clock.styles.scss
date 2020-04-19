@@ -1,75 +1,94 @@
-@import "../_globals.scss";
+@import '../_globals.scss';
+
+.clock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
 
 .clock-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
-  text-transform: uppercase;
-  letter-spacing: .1rem;
-  font-size: .8rem;
-  color: white;
-  height: 90vh;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 0.8rem;
+    color: white;
+    justify-content: center;
 }
 
 .clock-start-over-container {
-  display: flex;
+    display: flex;
 }
 
 .clock-up-next {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  height: 50px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    height: 50px;
 }
 
 .clock-current-exercise {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  line-height: .8;
-  padding-bottom: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    line-height: 0.8;
+    padding-bottom: 15px;
 }
 
 .clock-exercise {
-  font-weight: 900;
-  letter-spacing: 0.05rem;
-  font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: 0.05rem;
+    font-size: 4rem;
 
-  @media screen and (max-width: $sm) {
-    font-size: 3rem;
-  }
-  @media screen and (max-width: $xs) {
-    font-size: 2rem;
-  }
+    @media screen and (max-width: $sm) {
+        font-size: 3rem;
+    }
+    @media screen and (max-width: $xs) {
+        font-size: 2rem;
+    }
 }
 
 .clock-next-exercise {
-  font-weight: 900;
-  letter-spacing: 0.05rem;
-  font-size: 2rem;
-  margin-top: .1rem;
-  line-height: .8;
+    font-weight: 900;
+    letter-spacing: 0.05rem;
+    font-size: 2rem;
+    margin-top: 0.1rem;
+    line-height: 0.8;
 }
 
 .clock-button {
-  color: var(--highlight-dim);
-  text-transform: uppercase;
-  background-color: rgba(255, 255, 255, 0);
-  outline: none;
-  border: none;
-  padding: 0 15px 15px 15px;
-  margin: 2px auto;
-  letter-spacing: .1rem;
-  font-size: .7rem;
-  transition: all .4s ease-in-out;
-  border-radius: 5px;
+    color: var(--highlight-dim);
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, 0);
+    outline: none;
+    border: none;
+    padding: 0 15px 15px 15px;
+    margin: 2px auto;
+    letter-spacing: 0.1rem;
+    font-size: 0.7rem;
+    transition: all 0.4s ease-in-out;
+    border-radius: 5px;
 
-    &:hover{
-      cursor: pointer;
-      color: var(--highlight-color);
-      letter-spacing: .15rem;
+    &:hover {
+        cursor: pointer;
+        color: var(--highlight-color);
+        letter-spacing: 0.15rem;
     }
+}
+
+.clock-dummy {
+    font-family: 'Bangers', cursive;
+    font-size: 0;
+    opacity: 0;
+    user-select: none;
+    -moz-user-select: none;
+    position: absolute;
+    top: 0;
+    z-index: -99;
+    cursor: default;
 }

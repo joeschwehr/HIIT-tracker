@@ -18,9 +18,8 @@ export default function SwipeableTemporaryDrawer(props) {
         onListChange,
         addNew,
         openSettingsWindow,
+        openConfirmPopup,
         removeExercise,
-        reset,
-        resetAll,
         editExercise
     } = props;
     const len = exerciseList.length;
@@ -64,12 +63,12 @@ export default function SwipeableTemporaryDrawer(props) {
                             <div className={classes.settingsText}>Set Intervals</div>
                         </div>
 
-                        <div className={classes.sidebarSettingsRight} onClick={resetAll}>
+                        {/* <div className={classes.sidebarSettingsRight} onClick={resetAll}>
                             <div className={classes.settingsIcon} fontSize='small'>
                                 <SettingsIcon />
                             </div>
-                            <div className={classes.settingsText}>Reset</div>
-                        </div>
+                            <div className={classes.settingsText}>Reset Exercises</div>
+                        </div> */}
                     </div>
 
                     <Divider />
@@ -93,7 +92,7 @@ export default function SwipeableTemporaryDrawer(props) {
                         />
                     </List>
 
-                    <div className={classes.sidebarReset} onClick={reset}>
+                    <div className={classes.sidebarReset} onClick={openConfirmPopup}>
                         RESET EXERCISES
                     </div>
                 </div>

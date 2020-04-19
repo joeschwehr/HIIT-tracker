@@ -4,9 +4,11 @@ export default makeStyles({
     list: {
         width: 360,
         color: 'white',
-        padding: '0 30px'
+        padding: '0 30px 20px 30px'
     },
     btn: {
+        fontFamily:
+            '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
         padding: '10px 20px',
         textTransform: 'uppercase',
         fontSize: '.7rem',
