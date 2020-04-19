@@ -5,8 +5,11 @@ import AddNewPopup from './components/addNew-popup/addNewPopup';
 import SettingsPopup from './components/settingsPopup/settingsPopup';
 import ConfirmPopup from './components/confirmPopup/confirmPopup';
 
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+
 import Clock from './components/Clock/Clock.component.jsx';
-import { voiceInit } from './components/speech.helper';
+import { voiceInit, iosVoices } from './components/speech.helper';
 
 import exerciseList from './exerciseList';
 import uuid from 'uuid/v4';
@@ -20,12 +23,17 @@ class App extends React.Component {
             restInterval: JSON.parse(window.localStorage.getItem('restInterval')) || 10,
             isIntervalDialogOpen: false,
             isAddNewDialogOpen: false,
-            isConfirmDialogOpen: false
+            isConfirmDialogOpen: false,
+            isMuted: false
         };
     }
 
     componentDidMount() {
         voiceInit(); // preload voices
+
+        if (window.orientation >= -1) {
+            iosVoices();
+        }
     }
 
     onListChange = newList => {
@@ -91,6 +99,11 @@ class App extends React.Component {
         window.localStorage.setItem('exerciseList', JSON.stringify(exerciseList));
     };
 
+    toggleMute = () => {
+        const mute = this.state.isMuted;
+        this.setState({ isMuted: !mute });
+    };
+
     // resetAll = () => {
     //     this.setState({ exerciseList: exerciseList });
     //     window.localStorage.setItem('exerciseList', JSON.stringify(exerciseList));
@@ -107,7 +120,8 @@ class App extends React.Component {
             isIntervalDialogOpen,
             isConfirmDialogOpen,
             workoutInterval,
-            restInterval
+            restInterval,
+            isMuted
         } = this.state;
         const {
             onListChange,
@@ -121,7 +135,8 @@ class App extends React.Component {
             updateIntervals,
             removeExercise,
             resetExercises,
-            editExercise
+            editExercise,
+            toggleMute
         } = this;
 
         return (
@@ -149,10 +164,14 @@ class App extends React.Component {
                 {isConfirmDialogOpen && (
                     <ConfirmPopup closePopup={closeConfirmPopup} resetExercises={resetExercises} />
                 )}
+                <div className='volume-btn' onClick={toggleMute}>
+                    {isMuted ? <VolumeOffIcon></VolumeOffIcon> : <VolumeUpIcon></VolumeUpIcon>}
+                </div>
                 <Clock
                     exerciseList={exerciseList}
                     workoutInterval={workoutInterval}
                     restInterval={restInterval}
+                    isMuted={isMuted}
                 />
             </div>
         );

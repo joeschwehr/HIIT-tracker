@@ -3,7 +3,7 @@ import Timer from '../Timer/Timer';
 import './clock.styles.scss';
 
 export default function Watch(props) {
-    const { exerciseList, workoutInterval, restInterval } = props;
+    const { exerciseList, workoutInterval, restInterval, isMuted } = props;
     const [isResting, setIsResting] = useState(false);
     const [index, setIndex] = useState(0);
     const [precount, setPrecount] = useState(4);
@@ -69,6 +69,7 @@ export default function Watch(props) {
                     currentExercise={currentExercise}
                     nextExercise={nextExercise}
                     workoutInterval={workoutInterval}
+                    isMuted={isMuted}
                     reset={reset}
                 />
                 <div className='clock-up-next'>

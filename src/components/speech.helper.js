@@ -1,3 +1,51 @@
+// Necessary for safari
+// Safari will only speak after speaking from a button click
+// var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+export function iosVoices() {
+    function SpeakText() {
+        var msg = new SpeechSynthesisUtterance();
+        window.speechSynthesis.speak(msg);
+
+        document.getElementsByClassName('App')[0].removeEventListener('click', SpeakText);
+    }
+
+    window.addEventListener('load', function() {
+        document.getElementsByClassName('App')[0].addEventListener('click', SpeakText);
+    });
+
+    // Needed to change between the two audio contexts
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+
+    var context;
+    var processor;
+
+    // Overrides the base constructor to use a singleton like structure
+    // Needed for Safari
+    var BasePrototype = AudioContext.prototype;
+    AudioContext = function() {
+        return context;
+    };
+    AudioContext.prototype = BasePrototype;
+
+    // Sets the old style getUserMedia to use the new style that is supported in more browsers
+    window.navigator.getUserMedia = function(constraints, successCallback, errorCallback) {
+        context = new BasePrototype.constructor();
+        processor = context.createScriptProcessor(1024, 1, 1);
+        processor.connect(context.destination);
+
+        window.navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(function(e) {
+                successCallback(e);
+            })
+            .catch(function(e) {
+                errorCallback(e);
+            });
+    };
+}
+////////////////////////////////////////////////////////////////
+
 export function voiceInit() {
     // list of languages is probably not loaded, wait for it
     if (window.speechSynthesis.getVoices().length === 0) {
@@ -10,7 +58,7 @@ export function voiceInit() {
     }
 }
 
-export function textToSpeech(text, desiredVoice = 1) {
+export function textToSpeech(muted = false, text, desiredVoice = 1) {
     // get all voices that browser offers
     let available_voices = window.speechSynthesis.getVoices();
 
@@ -45,6 +93,12 @@ export function textToSpeech(text, desiredVoice = 1) {
     let utter = new SpeechSynthesisUtterance();
     utter.rate = 1.1;
     utter.pitch = 1;
+    utter.volume = 0.9;
+
+    if (muted) {
+        utter.volume = 0;
+    }
+
     utter.text = text;
     if (desiredVoice === 1) {
         utter.voice = english_voice1;

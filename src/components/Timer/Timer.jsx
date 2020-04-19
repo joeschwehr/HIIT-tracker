@@ -14,6 +14,7 @@ export default function Timer(props) {
         nextExercise,
         currentExercise,
         workoutInterval,
+        isMuted,
         reset
     } = props;
     const [isRunning, setIsRunning] = useState(false);
@@ -21,28 +22,28 @@ export default function Timer(props) {
     const timeRemaining = runTime - seconds;
 
     const goPrecount = useCallback(() => {
-        if (precount === 1) textToSpeech(`Go. ${currentExercise}`);
-        else if (precount > 0) textToSpeech(precount - 1);
+        if (precount === 1) textToSpeech(isMuted, `Go. ${currentExercise}`);
+        else if (precount > 0) textToSpeech(isMuted, precount - 1);
 
         setPrecount(precount - 1);
-    }, [currentExercise, precount, setPrecount]);
+    }, [currentExercise, precount, setPrecount, isMuted]);
 
     const timeZero = useCallback(() => {
         if (nextExercise === null) {
             setIsRunning(false);
             setSeconds(seconds + 1); //timeremaining should be 0 after this. Triggers "great job"
-            textToSpeech('Great job', 'Samantha');
+            textToSpeech(isMuted, 'Great job', 'Samantha');
         } else {
             if (isResting) {
-                textToSpeech(`Go. ${nextExercise}`);
+                textToSpeech(isMuted, `Go. ${nextExercise}`);
             } else {
-                textToSpeech(`Rest. Next up, ${nextExercise}`, 'Samantha');
+                textToSpeech(isMuted, `Rest. Next up, ${nextExercise}`, 'Samantha');
             }
 
             alternate();
             setSeconds(0);
         }
-    }, [isResting, nextExercise, alternate, seconds]);
+    }, [isResting, nextExercise, alternate, seconds, isMuted]);
 
     const timer = useCallback(() => {
         if (precount >= 0) {
@@ -59,7 +60,7 @@ export default function Timer(props) {
             currentExercise.toLowerCase() === 'step up onto chair' &&
             timeRemaining === Math.ceil(workoutInterval / 2) + 1
         ) {
-            textToSpeech('Switch sides.');
+            textToSpeech(isMuted, 'Switch sides.');
             setSeconds(seconds + 1);
             return;
         }
@@ -70,8 +71,8 @@ export default function Timer(props) {
         }
 
         if (timeRemaining <= 6) {
-            if (!isResting) textToSpeech(timeRemaining - 1, 'Samantha');
-            else if (timeRemaining <= 4) textToSpeech(timeRemaining - 1);
+            if (!isResting) textToSpeech(isMuted, timeRemaining - 1, 'Samantha');
+            else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1);
         }
 
         setSeconds(seconds + 1);
@@ -83,6 +84,7 @@ export default function Timer(props) {
         precount,
         workoutInterval,
         isResting,
+        isMuted,
         goPrecount,
         timeZero
     ]);
