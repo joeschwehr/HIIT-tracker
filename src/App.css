@@ -9,18 +9,6 @@
     justify-content: center;
 }
 
-.volume-btn {
-    cursor: pointer;
-    opacity: 0.3;
-    transition: all 0.3s;
-    transform: scale(1);
-}
-
-.volume-btn:hover {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
 @media (max-width: 700px) {
     .App {
         height: 85vh;

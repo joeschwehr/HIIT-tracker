@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Timer from '../Timer/Timer';
 import './clock.styles.scss';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
 export default function Watch(props) {
-    const { exerciseList, workoutInterval, restInterval, isMuted } = props;
+    const { exerciseList, workoutInterval, restInterval, isMuted, toggleMute } = props;
     const [isResting, setIsResting] = useState(false);
     const [index, setIndex] = useState(0);
     const [precount, setPrecount] = useState(4);
@@ -54,8 +56,11 @@ export default function Watch(props) {
         currentExerciseMsg = '';
     }
 
+    const isSafariMobile =
+        /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && window.orientation > -1;
+
     return (
-        <div className='clock'>
+        <div className='clock' style={isSafariMobile ? { flexGrow: 0.75 } : null}>
             {/* <button className="clock-button" onClick={resetWorkout}>Restart Workout</button> */}
             <div className='clock-container'>
                 <div>{exerciseIndexMsg}</div>
@@ -82,7 +87,11 @@ export default function Watch(props) {
                         </div>
                     )}
                 </div>
+                <div className='volume-btn' onClick={toggleMute}>
+                    {isMuted ? <VolumeOffIcon></VolumeOffIcon> : <VolumeUpIcon></VolumeUpIcon>}
+                </div>
             </div>
+
             <div className='clock-start-over-container'>
                 <button className='clock-button' onClick={resetWorkout}>
                     Restart Workout

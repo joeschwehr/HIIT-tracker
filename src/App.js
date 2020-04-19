@@ -5,9 +5,6 @@ import AddNewPopup from './components/addNew-popup/addNewPopup';
 import SettingsPopup from './components/settingsPopup/settingsPopup';
 import ConfirmPopup from './components/confirmPopup/confirmPopup';
 
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import VolumeOffIcon from '@material-ui/icons/VolumeOff';
-
 import Clock from './components/Clock/Clock.component.jsx';
 import { voiceInit, iosVoices } from './components/speech.helper';
 
@@ -139,8 +136,10 @@ class App extends React.Component {
             toggleMute
         } = this;
 
+        const isSafariMobile =
+            /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && window.orientation > -1;
         return (
-            <div className='App'>
+            <div className='App' style={isSafariMobile ? { justifyContent: 'flex-start' } : null}>
                 <Sidebar
                     exerciseList={exerciseList}
                     onListChange={onListChange}
@@ -164,14 +163,12 @@ class App extends React.Component {
                 {isConfirmDialogOpen && (
                     <ConfirmPopup closePopup={closeConfirmPopup} resetExercises={resetExercises} />
                 )}
-                <div className='volume-btn' onClick={toggleMute}>
-                    {isMuted ? <VolumeOffIcon></VolumeOffIcon> : <VolumeUpIcon></VolumeUpIcon>}
-                </div>
                 <Clock
                     exerciseList={exerciseList}
                     workoutInterval={workoutInterval}
                     restInterval={restInterval}
                     isMuted={isMuted}
+                    toggleMute={toggleMute}
                 />
             </div>
         );
