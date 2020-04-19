@@ -4,7 +4,7 @@ export default makeStyles({
     list: {
         width: 360,
         color: 'white',
-        padding: '0 30px 20px 30px'
+        padding: '0 30px 10px 30px',
     },
     btn: {
         fontFamily:
@@ -19,13 +19,13 @@ export default makeStyles({
         '&:hover': {
             backgroundColor: 'rgba(0, 0, 0, 0)',
             color: 'var(--highlight-color)',
-            letterSpacing: '.15rem'
-        }
+            letterSpacing: '.15rem',
+        },
     },
     sidebarHeader: {
         display: 'flex',
         alignItems: 'center',
-        paddingTop: '15px'
+        paddingTop: '15px',
     },
     sidebarChevron: {
         display: 'flex',
@@ -38,12 +38,12 @@ export default makeStyles({
 
         '&:hover': {
             backgroundColor: 'rgba(255, 255, 255, 0.25)',
-            transform: 'scale(1.2)'
-        }
+            transform: 'scale(1.2)',
+        },
     },
     sidebarTitle: {
         cursor: 'default',
-        margin: 0
+        margin: 0,
     },
     sidebarSubitle: {
         textTransform: 'uppercase',
@@ -54,7 +54,7 @@ export default makeStyles({
         alignItems: 'center',
         fontSize: '.7rem',
         letterSpacing: '.1rem',
-        cursor: 'default'
+        cursor: 'default',
     },
 
     sidebarSettings: {
@@ -71,8 +71,8 @@ export default makeStyles({
 
         '&:hover': {
             color: 'white',
-            cursor: 'pointer'
-        }
+            cursor: 'pointer',
+        },
     },
 
     sidebarSettingsRight: {
@@ -88,18 +88,18 @@ export default makeStyles({
 
         '&:hover': {
             color: 'white',
-            cursor: 'pointer'
-        }
+            cursor: 'pointer',
+        },
     },
 
     settingsContainer: {
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
 
     settingsText: {
         paddingLeft: '10px',
-        paddingBottom: '5px'
+        paddingBottom: '5px',
     },
 
     sidebarAddNew: {
@@ -121,8 +121,8 @@ export default makeStyles({
         '&:hover': {
             color: 'white',
             backgroundColor: 'rgba(255, 255, 255, .15)',
-            cursor: 'pointer'
-        }
+            cursor: 'pointer',
+        },
     },
 
     sidebarReset: {
@@ -145,7 +145,7 @@ export default makeStyles({
             opacity: '1',
             color: 'rgba(0, 0, 0, 0.9)',
             backgroundColor: 'rgba(255, 255, 255, .7)',
-            cursor: 'pointer'
-        }
-    }
+            cursor: 'pointer',
+        },
+    },
 });
