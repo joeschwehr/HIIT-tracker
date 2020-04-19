@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "33cf62595c6a7c2318eab96c5f70df3e",
+    "revision": "d34abfddb73014d4e237636e08807bf8",
     "url": "/HIIT-tracker/index.html"
   },
   {
-    "revision": "0a30734819ff0dde72be",
-    "url": "/HIIT-tracker/static/css/main.c29d8d93.chunk.css"
+    "revision": "b8e6758376a227cbd856",
+    "url": "/HIIT-tracker/static/css/main.d81cf9e2.chunk.css"
   },
   {
     "revision": "9f8232e5cbbe2c5efb8f",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/HIIT-tracker/static/js/2.ff292144.chunk.js.LICENSE"
   },
   {
-    "revision": "0a30734819ff0dde72be",
+    "revision": "b8e6758376a227cbd856",
     "url": "/HIIT-tracker/static/js/main.614b7988.chunk.js"
   },
   {
