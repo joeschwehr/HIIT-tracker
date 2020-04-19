@@ -10,7 +10,7 @@ export function iosVoices() {
         document.getElementsByClassName('App')[0].removeEventListener('click', SpeakText);
     }
 
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
         document.getElementsByClassName('App')[0].addEventListener('click', SpeakText);
     });
 
@@ -23,23 +23,23 @@ export function iosVoices() {
     // Overrides the base constructor to use a singleton like structure
     // Needed for Safari
     var BasePrototype = AudioContext.prototype;
-    AudioContext = function() {
+    AudioContext = function () {
         return context;
     };
     AudioContext.prototype = BasePrototype;
 
     // Sets the old style getUserMedia to use the new style that is supported in more browsers
-    window.navigator.getUserMedia = function(constraints, successCallback, errorCallback) {
+    window.navigator.getUserMedia = function (constraints, successCallback, errorCallback) {
         context = new BasePrototype.constructor();
         processor = context.createScriptProcessor(1024, 1, 1);
         processor.connect(context.destination);
 
         window.navigator.mediaDevices
             .getUserMedia(constraints)
-            .then(function(e) {
+            .then(function (e) {
                 successCallback(e);
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 errorCallback(e);
             });
     };
@@ -49,7 +49,7 @@ export function iosVoices() {
 export function voiceInit() {
     // list of languages is probably not loaded, wait for it
     if (window.speechSynthesis.getVoices().length === 0) {
-        window.speechSynthesis.addEventListener('voiceschanged', function() {
+        window.speechSynthesis.addEventListener('voiceschanged', function () {
             textToSpeech(' ');
         });
     } else {
@@ -59,6 +59,8 @@ export function voiceInit() {
 }
 
 export function textToSpeech(muted = false, text, desiredVoice = 1) {
+    if (muted) return;
+
     // get all voices that browser offers
     let available_voices = window.speechSynthesis.getVoices();
 
@@ -94,10 +96,6 @@ export function textToSpeech(muted = false, text, desiredVoice = 1) {
     utter.rate = 1.1;
     utter.pitch = 1;
     utter.volume = 0.9;
-
-    if (muted) {
-        utter.volume = 0;
-    }
 
     utter.text = text;
     if (desiredVoice === 1) {
