@@ -10,7 +10,7 @@ import Clock from './components/Clock/Clock.component.jsx';
 import { voiceInit, iosVoices } from './components/speech.helper';
 
 import exerciseList from './exerciseList';
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 class App extends React.Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class App extends React.Component {
     componentDidMount() {
         voiceInit(); // preload voices
 
-        if (window.orientation >= -1) {
+        if (window.orientation >= -90) {
             iosVoices();
         }
     }
@@ -61,7 +61,7 @@ class App extends React.Component {
     };
 
     addNewExercise = (newExercise) => {
-        const updatedList = [...this.state.exerciseList, { id: uuid(), name: newExercise }];
+        const updatedList = [...this.state.exerciseList, { id: uuidv4(), name: newExercise }];
         this.setState({ exerciseList: updatedList });
         window.localStorage.setItem('exerciseList', JSON.stringify(updatedList));
     };
@@ -138,7 +138,7 @@ class App extends React.Component {
         } = this;
 
         const isSafariMobile =
-            /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && window.orientation > -1;
+            /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && window.orientation > -90;
         return (
             <div className='App' style={isSafariMobile ? { justifyContent: 'flex-start' } : null}>
                 <Particles

@@ -57,7 +57,7 @@ export default function Watch(props) {
     }
 
     const isSafariMobile =
-        /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && window.orientation > -1;
+        /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && window.orientation > -90;
 
     return (
         <div className='clock' style={isSafariMobile ? { flexGrow: 0.75 } : null}>
@@ -87,7 +87,12 @@ export default function Watch(props) {
                         </div>
                     )}
                 </div>
-                <div className='volume-btn' onClick={toggleMute}>
+
+                <div
+                    className='volume-btn'
+                    onClick={toggleMute}
+                    style={nextExercise === null ? { opacity: 0 } : null}
+                >
                     {isMuted ? <VolumeOffIcon></VolumeOffIcon> : <VolumeUpIcon></VolumeUpIcon>}
                 </div>
             </div>

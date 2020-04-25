@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 export default [
     { id: uuid(), name: 'Jumping Jacks' },
@@ -13,5 +13,5 @@ export default [
     { id: uuid(), name: 'Lunges' },
     { id: uuid(), name: 'Push-ups With Rotation' },
     { id: uuid(), name: 'Side Plank 1' },
-    { id: uuid(), name: 'Side Plank 2' }
+    { id: uuid(), name: 'Side Plank 2' },
 ];
