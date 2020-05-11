@@ -4,10 +4,8 @@ import Sidebar from './components/sidebar/Sidebar';
 import AddNewPopup from './components/addNew-popup/addNewPopup';
 import SettingsPopup from './components/settingsPopup/settingsPopup';
 import ConfirmPopup from './components/confirmPopup/confirmPopup';
-import Particles from 'react-particles-js';
 
 import Clock from './components/Clock/Clock.component.jsx';
-import { voiceInit, iosVoices } from './components/speech.helper';
 
 import exerciseList from './exerciseList';
 import { v4 as uuidv4 } from 'uuid';
@@ -24,14 +22,6 @@ class App extends React.Component {
             isConfirmDialogOpen: false,
             isMuted: false,
         };
-    }
-
-    componentDidMount() {
-        voiceInit(); // preload voices
-
-        if (window.orientation >= -90) {
-            iosVoices();
-        }
     }
 
     onListChange = (newList) => {
@@ -141,7 +131,7 @@ class App extends React.Component {
             /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && window.orientation > -90;
         return (
             <div className='App' style={isSafariMobile ? { justifyContent: 'flex-start' } : null}>
-                <Particles
+                {/* <Particles
                     className='particles'
                     params={{
                         particles: {
@@ -186,7 +176,7 @@ class App extends React.Component {
                         },
                         retina_detect: true,
                     }}
-                />
+                /> */}
                 <Sidebar
                     exerciseList={exerciseList}
                     onListChange={onListChange}

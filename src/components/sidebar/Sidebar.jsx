@@ -5,7 +5,8 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import SettingsIcon from '@material-ui/icons/Settings';
+// import SettingsIcon from '@material-ui/icons/Settings';
+import TimerIcon from '@material-ui/icons/Timer';
 
 import DraggableList from 'react-draggable-list';
 import SidebarListElement from './Sidebar-list-element';
@@ -20,13 +21,13 @@ export default function SwipeableTemporaryDrawer(props) {
         openSettingsWindow,
         openConfirmPopup,
         removeExercise,
-        editExercise
+        editExercise,
     } = props;
     const len = exerciseList.length;
     const classes = useStyles();
     const [state, setState] = React.useState(false);
 
-    const toggleDrawer = open => event => {
+    const toggleDrawer = (open) => (event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
@@ -58,7 +59,7 @@ export default function SwipeableTemporaryDrawer(props) {
                     <div className={classes.settingsContainer}>
                         <div className={classes.sidebarSettings} onClick={openSettingsWindow}>
                             <div className={classes.settingsIcon} fontSize='small'>
-                                <SettingsIcon />
+                                <TimerIcon />
                             </div>
                             <div className={classes.settingsText}>Set Intervals</div>
                         </div>
@@ -82,12 +83,12 @@ export default function SwipeableTemporaryDrawer(props) {
                             list={exerciseList}
                             itemKey='id'
                             template={SidebarListElement}
-                            onMoveEnd={newList => onListChange(newList)}
+                            onMoveEnd={(newList) => onListChange(newList)}
                             padding={0}
                             constrainDrag={true}
                             commonProps={{
                                 removeExercise: removeExercise,
-                                editExercise: editExercise
+                                editExercise: editExercise,
                             }}
                         />
                     </List>

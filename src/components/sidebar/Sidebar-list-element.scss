@@ -38,9 +38,16 @@
     height: 44px;
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 5px;
 
     @media screen and (max-width: $lg) {
         margin-left: 10px;
+    }
+
+    @media screen and (max-width: 350px) {
+        font-size: 14px;
     }
 }
 

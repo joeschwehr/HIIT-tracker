@@ -12,6 +12,8 @@
 }
 
 .timer-container {
+    z-index: 1;
+    position: relative;
     width: 350px;
     height: 350px;
     padding: 15px;
@@ -110,6 +112,15 @@
             cursor: pointer;
         }
     }
+}
+
+.particles {
+    position: absolute;
+    width: 100vw;
+    height: 99vh;
+    z-index: 0;
+    top: 2px;
+    left: 0;
 }
 
 @keyframes flare {

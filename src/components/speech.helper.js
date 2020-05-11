@@ -3,6 +3,7 @@
 // var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 export function iosVoices() {
+    console.log('iosVoices');
     function SpeakText() {
         var msg = new SpeechSynthesisUtterance();
         window.speechSynthesis.speak(msg);
@@ -44,48 +45,49 @@ export function iosVoices() {
             });
     };
 }
-////////////////////////////////////////////////////////////////
-var available_voices = null;
-
-// this will hold an english voice
-var voice1 = '';
-var voice2 = '';
 
 export function voiceInit() {
+    // this will hold an english voice
+    let voices = [];
+
     // list of languages is probably not loaded, wait for it
     if (window.speechSynthesis.getVoices().length === 0) {
         window.speechSynthesis.addEventListener('voiceschanged', function () {
-            getVoices();
+            voices = getVoices();
             textToSpeech(' ');
+            return voices;
         });
     } else {
         // languages list available, no need to wait
-        getVoices();
+        voices = getVoices();
         textToSpeech(' ');
+        return voices;
     }
 }
 
-export function textToSpeech(muted = false, text, desiredVoice = 1) {
+export function textToSpeech(muted = false, text, voice, rate = 1) {
     if (muted) return;
 
     // new SpeechSynthesisUtterance object
     let utter = new SpeechSynthesisUtterance();
-    utter.rate = 1.1;
+    utter.rate = rate;
     utter.pitch = 1;
     utter.volume = 0.9;
 
     utter.text = text;
-    if (desiredVoice === 1) {
-        utter.voice = voice1;
-    } else utter.voice = voice2;
+    utter.voice = voice;
 
     // speak
     window.speechSynthesis.speak(utter);
 }
 
-function getVoices() {
+export function getVoices() {
+    console.log('getting voices');
+    let voice1 = null;
+    let voice2 = null;
+
     // get all voices that browser offers
-    available_voices = window.speechSynthesis.getVoices();
+    let available_voices = window.speechSynthesis.getVoices();
 
     // find voice by language locale "en-US"
     // if not then select the first voice
@@ -113,4 +115,6 @@ function getVoices() {
     if (!voice2) {
         voice2 = available_voices[0];
     }
+
+    return [voice1, voice2];
 }

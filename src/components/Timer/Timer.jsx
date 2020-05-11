@@ -2,6 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PauseIcon from '@material-ui/icons/PauseCircleFilled';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import { textToSpeech } from '../speech.helper';
+import { getVoices, iosVoices } from '../speech.helper';
+import Particles from 'react-particles-js';
+
 import './timer.styles.scss';
 
 export default function Timer(props) {
@@ -17,33 +20,45 @@ export default function Timer(props) {
         isMuted,
         reset,
     } = props;
+
     const [isRunning, setIsRunning] = useState(false);
     const [seconds, setSeconds] = useState(0);
+    const [voice1, setVoice1] = useState(null);
+    const [voice2, setVoice2] = useState(null);
+
     const timeRemaining = runTime - seconds;
 
     const goPrecount = useCallback(() => {
-        if (precount === 1) textToSpeech(isMuted, `Go. ${currentExercise}.`);
-        else if (precount > 0) textToSpeech(isMuted, precount - 1 + '.');
+        if (window.navigator.appVersion.includes('Edge')) {
+            const current = currentExercise;
+            if (!(precount < 4)) {
+                textToSpeech(isMuted, `3, 2, 1, Go, ${current}`, voice1, 0.95);
+            }
+        } else {
+            if (precount === 1) textToSpeech(isMuted, `Go. ${currentExercise}.`, voice1);
+            else if (precount > 0) textToSpeech(isMuted, precount - 1 + '.', voice1);
+        }
 
         setPrecount(precount - 1);
-    }, [currentExercise, precount, setPrecount, isMuted]);
+    }, [currentExercise, precount, setPrecount, isMuted, voice1]);
 
     const timeZero = useCallback(() => {
         if (nextExercise === null) {
             setIsRunning(false);
             setSeconds(seconds + 1); //timeremaining should be 0 after this. Triggers "great job"
-            textToSpeech(isMuted, 'Great job.', 'Samantha');
+            if (!window.navigator.userAgent.includes('Edge'))
+                textToSpeech(isMuted, 'Great job.', voice2);
         } else {
-            if (isResting) {
-                textToSpeech(isMuted, `Go. ${nextExercise}.`);
-            } else {
-                textToSpeech(isMuted, `Rest. Next up, ${nextExercise.toLowerCase()}.`, 'Samantha');
+            if (isResting && !window.navigator.userAgent.includes('Edge')) {
+                textToSpeech(isMuted, `Go. ${nextExercise}.`, voice1);
+            } else if (!window.navigator.userAgent.includes('Edge')) {
+                textToSpeech(isMuted, `Rest. Next up, ${nextExercise.toLowerCase()}.`, voice2);
             }
 
             alternate();
             setSeconds(0);
         }
-    }, [isResting, nextExercise, alternate, seconds, isMuted]);
+    }, [isResting, nextExercise, alternate, seconds, isMuted, voice1, voice2]);
 
     const timer = useCallback(() => {
         if (precount >= 0) {
@@ -61,7 +76,7 @@ export default function Timer(props) {
             currentExercise.toLowerCase() === 'step up onto chair' &&
             timeRemaining === Math.ceil(workoutInterval / 2) + 2
         ) {
-            textToSpeech(isMuted, 'Switch sides.');
+            textToSpeech(isMuted, 'Switch sides.', voice1);
             setSeconds(seconds + 1);
             return;
         }
@@ -71,9 +86,33 @@ export default function Timer(props) {
             return;
         }
 
-        if (timeRemaining <= 6) {
-            if (!isResting) textToSpeech(isMuted, timeRemaining - 1 + '.', 'Samantha');
-            else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1 + '.');
+        if (timeRemaining === 7 && window.navigator.appVersion.includes('Edge')) {
+            if (!isResting) {
+                if (nextExercise) {
+                    textToSpeech(
+                        isMuted,
+                        ` . 5, 4, 3, 2, 1, Rest, Next Up ${nextExercise}`,
+                        voice1,
+                        0.85
+                    );
+                }
+            }
+        }
+
+        if (timeRemaining === 5 && window.navigator.appVersion.includes('Edge')) {
+            if (isResting) {
+                if (nextExercise) {
+                    const next = nextExercise;
+                    textToSpeech(isMuted, `3, 2, 1, Go, ${next}`, voice1, 0.8);
+                }
+            } else if (!nextExercise) {
+                textToSpeech(isMuted, `3, 2, 1, Great Job.`, voice1, 1);
+            }
+        }
+
+        if (timeRemaining <= 6 && !window.navigator.appVersion.includes('Edge')) {
+            if (!isResting) textToSpeech(isMuted, timeRemaining - 1 + '.', voice2);
+            else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1 + '.', voice1);
         }
 
         setSeconds(seconds + 1);
@@ -88,8 +127,12 @@ export default function Timer(props) {
         isMuted,
         goPrecount,
         timeZero,
+        voice1,
+        voice2,
+        nextExercise,
     ]);
 
+    // component did mount hook
     useEffect(() => {
         if (reset) {
             resetWorkout();
@@ -100,7 +143,30 @@ export default function Timer(props) {
             const id = setInterval(timer, 1000);
             return () => clearInterval(id);
         }
-    }, [isRunning, timer, reset]);
+
+        if (window.orientation >= -90) {
+            iosVoices();
+        }
+
+        // Voice Init
+        if (voice1 === null || voice2 === null) {
+            // list of languages is probably not loaded, wait for it
+            if (window.speechSynthesis.getVoices().length === 0) {
+                window.speechSynthesis.addEventListener('voiceschanged', function () {
+                    const voices = getVoices();
+                    setVoice1(voices[0]);
+                    setVoice2(voices[1]);
+                    textToSpeech(isMuted, ' ', voice1);
+                });
+            } else {
+                // languages list available, no need to wait
+                const voices = getVoices();
+                setVoice1(voices[0]);
+                setVoice2(voices[1]);
+                textToSpeech(isMuted, ' ', voice1);
+            }
+        }
+    }, [isRunning, timer, reset, voice1, voice2, isMuted]);
 
     const start = () => {
         setIsRunning(true);
@@ -174,6 +240,52 @@ export default function Timer(props) {
                     <div className='timer-font'>0{timerButtons}</div>
                 )}
             </div>
+            <Particles
+                className='particles'
+                params={{
+                    particles: {
+                        number: {
+                            value: 100,
+                            density: {
+                                enable: true,
+                                value_area: 1500,
+                            },
+                        },
+                        line_linked: {
+                            enable: true,
+                            opacity: 0.06,
+                        },
+                        move: {
+                            direction: 'random',
+                            speed: 0.5,
+                        },
+                        size: {
+                            value: 1.2,
+                        },
+                        opacity: {
+                            anim: {
+                                enable: true,
+                                speed: 1,
+                                opacity_min: 0.15,
+                            },
+                        },
+                    },
+                    interactivity: {
+                        events: {
+                            onclick: {
+                                enable: false,
+                                mode: 'push',
+                            },
+                        },
+                        modes: {
+                            push: {
+                                particles_nb: 1,
+                            },
+                        },
+                    },
+                    retina_detect: true,
+                }}
+            />
         </div>
     );
 }

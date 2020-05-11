@@ -5,6 +5,26 @@ export default makeStyles({
         width: 360,
         color: 'white',
         padding: '0 30px 10px 30px',
+
+        '@media (max-width: 425px)': {
+            width: 350,
+        },
+
+        '@media (max-width: 405px)': {
+            width: 300,
+        },
+
+        '@media (max-width: 350px)': {
+            width: 260,
+        },
+
+        '@media (max-width: 300px)': {
+            width: 220,
+        },
+
+        '@media (max-width: 250px)': {
+            width: 170,
+        },
     },
     btn: {
         fontFamily:
@@ -15,6 +35,8 @@ export default makeStyles({
         letterSpacing: '.1rem',
         color: 'var(--highlight-dim)',
         transition: 'all .4s ease-in-out',
+        position: 'relative',
+        zIndex: '2',
 
         '&:hover': {
             backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -100,6 +122,7 @@ export default makeStyles({
     settingsText: {
         paddingLeft: '10px',
         paddingBottom: '5px',
+        whiteSpace: 'nowrap',
     },
 
     sidebarAddNew: {
