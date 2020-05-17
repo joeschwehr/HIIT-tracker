@@ -27,9 +27,11 @@ class App extends React.Component {
 
     componentDidMount() {
         if (window.orientation >= -90) {
-            console.log('vox');
             iosVoices();
         }
+        setTimeout(() => {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        }, 200);
     }
 
     onListChange = (newList) => {

@@ -26,14 +26,15 @@ export default function Timer(props) {
     const [seconds, setSeconds] = useState(0);
     const [voice1, setVoice1] = useState(null);
     const [voice2, setVoice2] = useState(null);
+    const [isEdge, setIsEdge] = useState(false);
 
     const timeRemaining = runTime - seconds;
 
     const goPrecount = useCallback(() => {
-        if (window.navigator.appVersion.includes('Edge')) {
+        if (isEdge) {
             const current = currentExercise;
             if (!(precount < 4)) {
-                textToSpeech(isMuted, `3, 2, 1, Go, ${current}`, voice1, 0.9);
+                textToSpeech(isMuted, `3! 2! 1! Go, ${current}`, voice1);
             }
         } else {
             if (precount === 1) textToSpeech(isMuted, `Go. ${currentExercise}.`, voice1);
@@ -41,7 +42,7 @@ export default function Timer(props) {
         }
 
         setPrecount(precount - 1);
-    }, [currentExercise, precount, setPrecount, isMuted, voice1]);
+    }, [currentExercise, precount, setPrecount, isMuted, voice1, isEdge]);
 
     const timeZero = useCallback(() => {
         if (nextExercise === null) {
@@ -87,37 +88,37 @@ export default function Timer(props) {
             return;
         }
 
-        if (timeRemaining === 7 && window.navigator.appVersion.includes('Edge')) {
+        if (timeRemaining === 7 && isEdge) {
             if (!isResting) {
                 if (nextExercise) {
                     setTimeout(() => {
                         textToSpeech(
                             isMuted,
-                            `5, 4, 3, 2, , , 1... Rest, Next Up, ${nextExercise}`,
+                            `5! 4! 3! 2! 1! Rest, Next Up, ${nextExercise}!`,
                             voice1,
-                            0.9
+                            1.1
                         );
-                    }, 700);
+                    }, 720);
                 }
             }
         }
 
-        if (timeRemaining === 5 && window.navigator.appVersion.includes('Edge')) {
+        if (timeRemaining === 5 && isEdge) {
             if (isResting) {
                 if (nextExercise) {
                     const next = nextExercise;
                     setTimeout(() => {
-                        textToSpeech(isMuted, `3, 2, 1... Go, ${next}`, voice1, 0.9);
+                        textToSpeech(isMuted, `3! 2! 1! Go, ${next}`, voice1, 1.1);
                     }, 700);
                 }
             } else if (!nextExercise) {
                 setTimeout(() => {
-                    textToSpeech(isMuted, `3, 2, 1... Great Job.`, voice1, 0.9);
+                    textToSpeech(isMuted, `3! 2! 1! Great Job!`, voice1);
                 }, 700);
             }
         }
 
-        if (timeRemaining <= 6 && !window.navigator.appVersion.includes('Edge')) {
+        if (timeRemaining <= 6 && !isEdge) {
             if (!isResting) textToSpeech(isMuted, timeRemaining - 1 + '.', voice2);
             else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1 + '.', voice1);
         }
@@ -137,6 +138,7 @@ export default function Timer(props) {
         voice1,
         voice2,
         nextExercise,
+        isEdge,
     ]);
 
     // component did mount hook
@@ -169,7 +171,11 @@ export default function Timer(props) {
                 textToSpeech(isMuted, ' ', voice1);
             }
         }
-    }, [isRunning, timer, reset, voice1, voice2, isMuted]);
+
+        if (window.navigator.appVersion.includes('Edge')) {
+            setIsEdge(true);
+        }
+    }, [isRunning, timer, reset, voice1, voice2, isMuted, isEdge, setIsEdge]);
 
     const start = () => {
         setIsRunning(true);
