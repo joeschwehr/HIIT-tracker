@@ -54,18 +54,20 @@ export function voiceInit() {
     if (window.speechSynthesis.getVoices().length === 0) {
         window.speechSynthesis.addEventListener('voiceschanged', function () {
             voices = getVoices();
-            document.body.addEventListener('click', textToSpeech(' '));
-            document.body.click();
-            document.body.removeEventListener('click');
+            // document.body.addEventListener('click', textToSpeech('1 '));
+            // document.body.click();
+            // document.body.dispatchEvent(new Event('click'));
+            // document.body.removeEventListener('click');
 
             return voices;
         });
     } else {
         // languages list available, no need to wait
         voices = getVoices();
-        document.body.addEventListener('click', textToSpeech(' '));
-        document.body.click();
-        document.body.removeEventListener('click');
+        // document.body.addEventListener('click', textToSpeech('2 '));
+        // document.body.click();
+        // document.body.dispatchEvent(new Event('click'));
+        // document.body.removeEventListener('click');
 
         return voices;
     }
