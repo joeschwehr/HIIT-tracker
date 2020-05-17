@@ -161,20 +161,29 @@ export default function Timer(props) {
                     const voices = getVoices();
                     setVoice1(voices[0]);
                     setVoice2(voices[1]);
-                    document.body.addEventListener('click', textToSpeech(isMuted, ' ', voice1));
-                    document.body.dispatchEvent(new Event('click'));
-                    document.body.click();
-                    document.body.removeEventListener('click', textToSpeech(isMuted, ' ', voice1));
+                    document.body.addEventListener('click', () =>
+                        textToSpeech(isMuted, ' ', voice1)
+                    );
+                    setTimeout(() => {
+                        document.body.dispatchEvent(new Event('click'));
+                        document.body.click();
+                        document.body.removeEventListener(
+                            'click',
+                            textToSpeech(isMuted, ' ', voice1)
+                        );
+                    }, 200);
                 });
             } else {
                 // languages list available, no need to wait
                 const voices = getVoices();
                 setVoice1(voices[0]);
                 setVoice2(voices[1]);
-                document.body.addEventListener('click', textToSpeech(isMuted, ' ', voice1));
-                document.body.dispatchEvent(new Event('click'));
-                document.body.click();
-                document.body.removeEventListener('click', textToSpeech(isMuted, ' ', voice1));
+                document.body.addEventListener('click', () => textToSpeech(isMuted, ' ', voice1));
+                setTimeout(() => {
+                    document.body.dispatchEvent(new Event('click'));
+                    document.body.click();
+                    document.body.removeEventListener('click', textToSpeech(isMuted, ' ', voice1));
+                }, 200);
             }
         }
 
