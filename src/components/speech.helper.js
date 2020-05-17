@@ -111,15 +111,17 @@ export function getVoices() {
 
     if (englishVoices.length) {
         voice1 = englishVoices.find((voice) => voice.name.includes('Alex'));
-        voice2 = englishVoices.find((voice) => voice.name.includes('Samantha'));
+        // voice2 = englishVoices.find((voice) => voice.name.includes('Samantha'));
 
         if (!voice1) {
             voice1 = englishVoices[0];
         }
 
-        if (!voice2) {
-            voice2 = englishVoices.find((voice) => voice.name.includes('Female'));
-        }
+        voice2 = voice1;
+
+        // if (!voice2) {
+        //     voice2 = englishVoices.find((voice) => voice.name.includes('Female'));
+        // }
     }
 
     if (!voice1) {
