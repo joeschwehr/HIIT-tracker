@@ -4,6 +4,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import AddNewPopup from './components/addNew-popup/addNewPopup';
 import SettingsPopup from './components/settingsPopup/settingsPopup';
 import ConfirmPopup from './components/confirmPopup/confirmPopup';
+import { iosVoices } from './components/speech.helper';
 
 import Clock from './components/Clock/Clock.component.jsx';
 
@@ -22,6 +23,13 @@ class App extends React.Component {
             isConfirmDialogOpen: false,
             isMuted: false,
         };
+    }
+
+    componentDidMount() {
+        if (window.orientation >= -90) {
+            console.log('vox');
+            iosVoices();
+        }
     }
 
     onListChange = (newList) => {

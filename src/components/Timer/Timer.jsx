@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PauseIcon from '@material-ui/icons/PauseCircleFilled';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import { textToSpeech } from '../speech.helper';
-import { getVoices, iosVoices } from '../speech.helper';
+import { getVoices } from '../speech.helper';
 import Particles from 'react-particles-js';
 
 import './timer.styles.scss';
@@ -22,6 +22,7 @@ export default function Timer(props) {
     } = props;
 
     const [isRunning, setIsRunning] = useState(false);
+    // const [particleColor, setColor] = useState('white');
     const [seconds, setSeconds] = useState(0);
     const [voice1, setVoice1] = useState(null);
     const [voice2, setVoice2] = useState(null);
@@ -32,7 +33,7 @@ export default function Timer(props) {
         if (window.navigator.appVersion.includes('Edge')) {
             const current = currentExercise;
             if (!(precount < 4)) {
-                textToSpeech(isMuted, `3, 2, 1, Go, ${current}`, voice1, 0.95);
+                textToSpeech(isMuted, `3, 2, 1, Go, ${current}`, voice1, 0.9);
             }
         } else {
             if (precount === 1) textToSpeech(isMuted, `Go. ${currentExercise}.`, voice1);
@@ -89,12 +90,14 @@ export default function Timer(props) {
         if (timeRemaining === 7 && window.navigator.appVersion.includes('Edge')) {
             if (!isResting) {
                 if (nextExercise) {
-                    textToSpeech(
-                        isMuted,
-                        ` . 5, 4, 3, 2, 1, Rest, Next Up ${nextExercise}`,
-                        voice1,
-                        0.85
-                    );
+                    setTimeout(() => {
+                        textToSpeech(
+                            isMuted,
+                            `5, 4, 3, 2, , , 1... Rest, Next Up, ${nextExercise}`,
+                            voice1,
+                            0.9
+                        );
+                    }, 700);
                 }
             }
         }
@@ -103,10 +106,14 @@ export default function Timer(props) {
             if (isResting) {
                 if (nextExercise) {
                     const next = nextExercise;
-                    textToSpeech(isMuted, `3, 2, 1, Go, ${next}`, voice1, 0.8);
+                    setTimeout(() => {
+                        textToSpeech(isMuted, `3, 2, 1... Go, ${next}`, voice1, 0.9);
+                    }, 700);
                 }
             } else if (!nextExercise) {
-                textToSpeech(isMuted, `3, 2, 1, Great Job.`, voice1, 1);
+                setTimeout(() => {
+                    textToSpeech(isMuted, `3, 2, 1... Great Job.`, voice1, 0.9);
+                }, 700);
             }
         }
 
@@ -142,10 +149,6 @@ export default function Timer(props) {
         if (isRunning) {
             const id = setInterval(timer, 1000);
             return () => clearInterval(id);
-        }
-
-        if (window.orientation >= -90) {
-            iosVoices();
         }
 
         // Voice Init
@@ -196,53 +199,68 @@ export default function Timer(props) {
         (isRunning && !isResting && precount <= 0 && timeRemaining >= 1);
 
     return (
-        <div
-            className='timer-gradient-wrapper'
-            style={
-                isWorkingOut
-                    ? {
-                          background:
-                              'linear-gradient(200deg, var(--highlight-color), var(--deeper-color))',
-                          animation: 'flare 2s ease-in-out 0s alternate infinite',
-                      }
-                    : null
-            }
-        >
-            <div className='timer-container'>
-                {precount >= 0 && isRunning ? (
-                    precount === 0 ? (
-                        <div className='timer-font'>GO{timerButtons}</div>
-                    ) : precount <= 3 ? (
-                        <div className='timer-font'>
-                            {precount}
-                            {timerButtons}
-                        </div>
-                    ) : reset ? (
+        <div style={{ display: 'flex' }}>
+            <div
+                className='timer-gradient-wrapper'
+                style={
+                    isWorkingOut
+                        ? {
+                              background:
+                                  'linear-gradient(200deg, var(--highlight-color), var(--deeper-color))',
+                              animation: 'flare 2s ease-in-out 0s alternate infinite',
+                          }
+                        : null
+                }
+            >
+                <div className='timer-container'>
+                    {precount >= 0 && isRunning ? (
+                        precount === 0 ? (
+                            <div className='timer-font'>GO{timerButtons}</div>
+                        ) : precount <= 3 ? (
+                            <div className='timer-font'>
+                                {precount}
+                                {timerButtons}
+                            </div>
+                        ) : reset ? (
+                            <div className='timer-font'>
+                                {timeRemaining}
+                                {timerButtons}
+                            </div>
+                        ) : (
+                            <div className='timer-fancy'>Let's go!</div>
+                        ) //prevents flicker upon reset
+                    ) : isNaN(runTime) ? (
+                        <div className='timer-font'>0 {timerButtons}</div>
+                    ) : timeRemaining !== 0 ? (
                         <div className='timer-font'>
                             {timeRemaining}
                             {timerButtons}
                         </div>
+                    ) : nextExercise === null ? (
+                        <div className='timer-fancy'>GREAT JOB!</div>
+                    ) : isResting ? (
+                        <div className='timer-font'>GO{timerButtons}</div>
                     ) : (
-                        <div className='timer-fancy'>Let's go!</div>
-                    ) //prevents flicker upon reset
-                ) : isNaN(runTime) ? (
-                    <div className='timer-font'>0 {timerButtons}</div>
-                ) : timeRemaining !== 0 ? (
-                    <div className='timer-font'>
-                        {timeRemaining}
-                        {timerButtons}
-                    </div>
-                ) : nextExercise === null ? (
-                    <div className='timer-fancy'>GREAT JOB!</div>
-                ) : isResting ? (
-                    <div className='timer-font'>GO{timerButtons}</div>
-                ) : (
-                    <div className='timer-font'>0{timerButtons}</div>
-                )}
+                        <div className='timer-font'>0{timerButtons}</div>
+                    )}
+                </div>
             </div>
             <Particles
                 className='particles'
                 params={{
+                    backgroundMask: {
+                        cover: {
+                            color: {
+                                value: {
+                                    r: 40,
+                                    g: 44,
+                                    b: 52,
+                                },
+                            },
+                            opacity: 1,
+                        },
+                        enable: true,
+                    },
                     particles: {
                         number: {
                             value: 100,
@@ -254,19 +272,27 @@ export default function Timer(props) {
                         line_linked: {
                             enable: true,
                             opacity: 0.06,
+                            width: 1,
+                            // color: {
+                            //     value: 'rgba(255, 0, 0, 0)',
+                            // },
                         },
                         move: {
                             direction: 'random',
                             speed: 0.5,
                         },
+                        // color: {
+                        //     value: 'rgba(255, 0, 0, 0)',
+                        // },
                         size: {
-                            value: 1.2,
+                            value: 1.3,
                         },
                         opacity: {
                             anim: {
                                 enable: true,
                                 speed: 1,
-                                opacity_min: 0.15,
+                                opacity_min: 0.85,
+                                opacity_max: 1,
                             },
                         },
                     },

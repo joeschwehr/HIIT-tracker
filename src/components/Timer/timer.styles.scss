@@ -5,6 +5,7 @@
     border-radius: 500rem;
     padding: 3px;
     box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.212);
+    z-index: 1;
 
     @media screen and (max-width: $sm) {
         padding: 2px;
@@ -116,6 +117,10 @@
 
 .particles {
     position: absolute;
+    // background: linear-gradient(45deg, var(--deeper-color) 30%, var(--highlight-color) 90%);
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease-in-out;
     width: 100vw;
     height: 99vh;
     z-index: 0;

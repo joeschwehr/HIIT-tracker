@@ -3,7 +3,7 @@
 // var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 export function iosVoices() {
-    console.log('iosVoices');
+    // console.log('iosVoices');
     function SpeakText() {
         var msg = new SpeechSynthesisUtterance();
         window.speechSynthesis.speak(msg);
@@ -54,13 +54,19 @@ export function voiceInit() {
     if (window.speechSynthesis.getVoices().length === 0) {
         window.speechSynthesis.addEventListener('voiceschanged', function () {
             voices = getVoices();
-            textToSpeech(' ');
+            document.body.addEventListener('click', textToSpeech(' '));
+            document.body.click();
+            document.body.removeEventListener('click');
+
             return voices;
         });
     } else {
         // languages list available, no need to wait
         voices = getVoices();
-        textToSpeech(' ');
+        document.body.addEventListener('click', textToSpeech(' '));
+        document.body.click();
+        document.body.removeEventListener('click');
+
         return voices;
     }
 }
@@ -82,7 +88,7 @@ export function textToSpeech(muted = false, text, voice, rate = 1) {
 }
 
 export function getVoices() {
-    console.log('getting voices');
+    // console.log('getting voices');
     let voice1 = null;
     let voice2 = null;
 

@@ -63,7 +63,7 @@ export default function Watch(props) {
         <div className='clock' style={isSafariMobile ? { flexGrow: 0.75 } : null}>
             {/* <button className="clock-button" onClick={resetWorkout}>Restart Workout</button> */}
             <div className='clock-container'>
-                <div>{exerciseIndexMsg}</div>
+                <div style={{ zIndex: 2 }}>{exerciseIndexMsg}</div>
                 <div className='clock-current-exercise'>{currentExerciseMsg}</div>
                 <Timer
                     runTime={time}
