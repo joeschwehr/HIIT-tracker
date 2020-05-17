@@ -38,7 +38,7 @@ export default function Timer(props) {
             }
         } else {
             if (precount === 1) textToSpeech(isMuted, `Go. ${currentExercise}.`, voice1);
-            else if (precount > 0) textToSpeech(isMuted, precount - 1 + '.', voice1);
+            else if (precount > 0) textToSpeech(isMuted, precount - 1, voice1);
         }
 
         setPrecount(precount - 1);
@@ -119,8 +119,8 @@ export default function Timer(props) {
         }
 
         if (timeRemaining <= 6 && !isEdge) {
-            if (!isResting) textToSpeech(isMuted, timeRemaining - 1 + '.', voice2);
-            else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1 + '.', voice1);
+            if (!isResting) textToSpeech(isMuted, timeRemaining - 1, voice2);
+            else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1, voice1);
         }
 
         setSeconds(seconds + 1);
