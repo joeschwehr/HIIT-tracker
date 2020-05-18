@@ -120,11 +120,7 @@ export default function Timer(props) {
 
         if (timeRemaining <= 6 && !isEdge) {
             if (!isResting) {
-                if (timeRemaining === 6) {
-                    textToSpeech(isMuted, timeRemaining - 1, voice2, 1.2);
-                } else {
-                    textToSpeech(isMuted, timeRemaining - 1, voice2);
-                }
+                textToSpeech(isMuted, timeRemaining - 1, voice2);
             } else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1, voice1);
         }
 
@@ -159,36 +155,24 @@ export default function Timer(props) {
         }
 
         // Voice Init
-        if (voice1 === null || voice2 === null) {
+        if (voice1 === null && voice2 === null) {
+            console.log('vox init');
             // list of languages is probably not loaded, wait for it
             if (window.speechSynthesis.getVoices().length === 0) {
+                console.log('wait');
                 window.speechSynthesis.addEventListener('voiceschanged', function () {
                     const voices = getVoices();
                     setVoice1(voices[0]);
                     setVoice2(voices[1]);
-                    document.body.addEventListener('click', () =>
-                        textToSpeech(isMuted, ' ', voice1)
-                    );
-                    setTimeout(() => {
-                        document.body.dispatchEvent(new Event('click'));
-                        document.body.click();
-                        document.body.removeEventListener(
-                            'click',
-                            textToSpeech(isMuted, ' ', voice1)
-                        );
-                    }, 200);
+                    // textToSpeech(isMuted, ' ', voice1);
                 });
             } else {
+                console.log('bypass');
                 // languages list available, no need to wait
                 const voices = getVoices();
                 setVoice1(voices[0]);
                 setVoice2(voices[1]);
-                document.body.addEventListener('click', () => textToSpeech(isMuted, ' ', voice1));
-                setTimeout(() => {
-                    document.body.dispatchEvent(new Event('click'));
-                    document.body.click();
-                    document.body.removeEventListener('click', textToSpeech(isMuted, ' ', voice1));
-                }, 200);
+                // textToSpeech(isMuted, ' ', voice1);
             }
         }
 

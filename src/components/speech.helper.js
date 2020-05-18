@@ -3,7 +3,7 @@
 // var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 export function iosVoices() {
-    // console.log('iosVoices');
+    console.log('iosVoices');
     function SpeakText() {
         var msg = new SpeechSynthesisUtterance();
         window.speechSynthesis.speak(msg);
@@ -112,17 +112,15 @@ export function getVoices() {
 
     if (englishVoices.length) {
         voice1 = englishVoices.find((voice) => voice.name.includes('Alex'));
-        // voice2 = englishVoices.find((voice) => voice.name.includes('Samantha'));
+        voice2 = englishVoices.find((voice) => voice.name.includes('Samantha'));
 
         if (!voice1) {
             voice1 = englishVoices[0];
         }
 
-        voice2 = voice1;
-
-        // if (!voice2) {
-        //     voice2 = englishVoices.find((voice) => voice.name.includes('Female'));
-        // }
+        if (!voice2) {
+            voice2 = englishVoices.find((voice) => voice.name.includes('Female'));
+        }
     }
 
     if (!voice1) {

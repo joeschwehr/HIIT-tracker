@@ -31,6 +31,7 @@ class App extends React.Component {
         }
         setTimeout(() => {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(' '));
         }, 200);
     }
 
