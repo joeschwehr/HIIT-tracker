@@ -92,6 +92,7 @@ export function textToSpeech(muted = false, text, voice, rate = 1) {
     utter.voice = voice;
 
     // speak
+    console.log(text);
     window.speechSynthesis.speak(utter);
 }
 
