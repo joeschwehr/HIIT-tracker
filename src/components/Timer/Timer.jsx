@@ -119,8 +119,13 @@ export default function Timer(props) {
         }
 
         if (timeRemaining <= 6 && !isEdge) {
-            if (!isResting) textToSpeech(isMuted, timeRemaining - 1, voice2);
-            else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1, voice1);
+            if (!isResting) {
+                if (timeRemaining === 6) {
+                    textToSpeech(isMuted, timeRemaining - 1, voice2, 1.2);
+                } else {
+                    textToSpeech(isMuted, timeRemaining - 1, voice2);
+                }
+            } else if (timeRemaining <= 4) textToSpeech(isMuted, timeRemaining - 1, voice1);
         }
 
         setSeconds(seconds + 1);
