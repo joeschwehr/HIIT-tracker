@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Timer from '../Timer/Timer';
 import './clock.styles.scss';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
 export default function Watch(props) {
-    const { exerciseList, workoutInterval, restInterval, isMuted, toggleMute } = props;
+    const {
+        exerciseList,
+        workoutInterval,
+        restInterval,
+        isMuted,
+        toggleMute,
+        isRestarting,
+        updateRestarting,
+    } = props;
     const [isResting, setIsResting] = useState(false);
     const [index, setIndex] = useState(0);
     const [precount, setPrecount] = useState(4);
     const [reset, setReset] = useState(false);
 
     let currentExercise = '';
+    let currentAlert = '';
     let nextExercise = '';
     let time = isResting ? restInterval : workoutInterval;
+
+    useEffect(() => {
+        if (isRestarting) {
+            resetWorkout();
+        }
+    }, [isRestarting]);
 
     const alternateBetweenResting = () => {
         if (!isResting) {
@@ -36,6 +51,7 @@ export default function Watch(props) {
 
     if (index < exerciseList.length) {
         currentExercise = exerciseList[index].name;
+        currentAlert = exerciseList[index].alert;
 
         if (exerciseList.length === 1 || index + 1 === exerciseList.length) {
             nextExercise = null;
@@ -72,10 +88,12 @@ export default function Watch(props) {
                     setPrecount={setPrecount}
                     isResting={isResting}
                     currentExercise={currentExercise}
+                    currentAlert={currentAlert}
                     nextExercise={nextExercise}
                     workoutInterval={workoutInterval}
                     isMuted={isMuted}
                     reset={reset}
+                    updateRestarting={updateRestarting}
                 />
                 <div className='clock-up-next'>
                     {nextExercise === null ? (

@@ -4,6 +4,8 @@ import Sidebar from './components/sidebar/Sidebar';
 import AddNewPopup from './components/addNew-popup/addNewPopup';
 import SettingsPopup from './components/settingsPopup/settingsPopup';
 import ConfirmPopup from './components/confirmPopup/confirmPopup';
+import VoxPopup from './components/voxPopup/voxPopup';
+
 import { iosVoices } from './components/speech.helper';
 
 import Clock from './components/Clock/Clock.component.jsx';
@@ -21,7 +23,10 @@ class App extends React.Component {
             isIntervalDialogOpen: false,
             isAddNewDialogOpen: false,
             isConfirmDialogOpen: false,
+            isVoxDialogOpen: false,
+            voxItem: null,
             isMuted: false,
+            isRestarting: false,
         };
     }
 
@@ -61,10 +66,43 @@ class App extends React.Component {
         this.setState({ isConfirmDialogOpen: false });
     };
 
-    addNewExercise = (newExercise) => {
-        const updatedList = [...this.state.exerciseList, { id: uuidv4(), name: newExercise }];
+    openVoxPopup = (item) => {
+        this.setState({ voxItem: item });
+        this.setState({ isVoxDialogOpen: true });
+    };
+    closeVoxPopup = () => {
+        this.setState({ isVoxDialogOpen: false });
+    };
+    updatePrompt = (id, newPrompt) => {
+        const updatedList = this.state.exerciseList.map((exercise) => {
+            if (exercise.id === id) {
+                return { alert: newPrompt, id: exercise.id, name: exercise.name };
+            } else {
+                return exercise;
+            }
+        });
+
         this.setState({ exerciseList: updatedList });
         window.localStorage.setItem('exerciseList', JSON.stringify(updatedList));
+    };
+
+    addNewExercise = (newExercise) => {
+        const updatedList = [
+            ...this.state.exerciseList,
+            { alert: false, id: uuidv4(), name: newExercise },
+        ];
+        this.setState({ exerciseList: updatedList });
+        window.localStorage.setItem('exerciseList', JSON.stringify(updatedList));
+
+        // sorry ;(
+        if (!window.navigator.userAgent.includes('Edge')) {
+            document.querySelector('.MuiPaper-root').scroll({
+                top: document.querySelector('#exercise-list').clientHeight,
+                behavior: 'smooth',
+            });
+        } else {
+            document.querySelector('.MuiPaper-root').scrollTop += 50;
+        }
     };
     removeExercise = (exerciseToRemove) => {
         const updatedList = this.state.exerciseList.filter(
@@ -96,6 +134,11 @@ class App extends React.Component {
     resetExercises = () => {
         this.setState({ exerciseList: exerciseList });
         window.localStorage.setItem('exerciseList', JSON.stringify(exerciseList));
+        this.setState({ isRestarting: true });
+    };
+
+    updateRestarting = () => {
+        this.setState({ isRestarting: false });
     };
 
     toggleMute = () => {
@@ -118,9 +161,12 @@ class App extends React.Component {
             isAddNewDialogOpen,
             isIntervalDialogOpen,
             isConfirmDialogOpen,
+            isVoxDialogOpen,
+            voxItem,
             workoutInterval,
             restInterval,
             isMuted,
+            isRestarting,
         } = this.state;
         const {
             onListChange,
@@ -131,69 +177,28 @@ class App extends React.Component {
             closeSettingsWindow,
             openConfirmPopup,
             closeConfirmPopup,
+            openVoxPopup,
+            closeVoxPopup,
+            updatePrompt,
             updateIntervals,
             removeExercise,
             resetExercises,
             editExercise,
             toggleMute,
+            updateRestarting,
         } = this;
 
         const isSafariMobile =
             /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && window.orientation > -90;
         return (
             <div className='App' style={isSafariMobile ? { justifyContent: 'flex-start' } : null}>
-                {/* <Particles
-                    className='particles'
-                    params={{
-                        particles: {
-                            number: {
-                                value: 100,
-                                density: {
-                                    enable: true,
-                                    value_area: 1500,
-                                },
-                            },
-                            line_linked: {
-                                enable: true,
-                                opacity: 0.06,
-                            },
-                            move: {
-                                direction: 'random',
-                                speed: 0.5,
-                            },
-                            size: {
-                                value: 1.2,
-                            },
-                            opacity: {
-                                anim: {
-                                    enable: true,
-                                    speed: 1,
-                                    opacity_min: 0.15,
-                                },
-                            },
-                        },
-                        interactivity: {
-                            events: {
-                                onclick: {
-                                    enable: false,
-                                    mode: 'push',
-                                },
-                            },
-                            modes: {
-                                push: {
-                                    particles_nb: 1,
-                                },
-                            },
-                        },
-                        retina_detect: true,
-                    }}
-                /> */}
                 <Sidebar
                     exerciseList={exerciseList}
                     onListChange={onListChange}
                     addNew={openAddNew}
                     openSettingsWindow={openSettingsWindow}
                     openConfirmPopup={openConfirmPopup}
+                    openVoxPopup={openVoxPopup}
                     removeExercise={removeExercise}
                     resetExercises={resetExercises}
                     editExercise={editExercise}
@@ -211,6 +216,14 @@ class App extends React.Component {
                 {isConfirmDialogOpen && (
                     <ConfirmPopup closePopup={closeConfirmPopup} resetExercises={resetExercises} />
                 )}
+                {isVoxDialogOpen && (
+                    <VoxPopup
+                        closePopup={closeVoxPopup}
+                        resetExercises={resetExercises}
+                        item={voxItem}
+                        updatePrompt={updatePrompt}
+                    />
+                )}
                 <Clock
                     style={{ zIndex: 1 }}
                     exerciseList={exerciseList}
@@ -218,6 +231,8 @@ class App extends React.Component {
                     restInterval={restInterval}
                     isMuted={isMuted}
                     toggleMute={toggleMute}
+                    isRestarting={isRestarting}
+                    updateRestarting={updateRestarting}
                 />
             </div>
         );

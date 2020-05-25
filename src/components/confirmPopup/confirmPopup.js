@@ -22,7 +22,7 @@ export default function FormDialog(props) {
         <div className={classes.confirmRoot}>
             <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
                 <DialogTitle id='form-dialog-title'>
-                    REVERT ALL EXERCISES TO <br></br>7-MINUTE-WORKOUT?
+                    RESET EXERCISES TO <br></br>7-MINUTE-WORKOUT?
                 </DialogTitle>
                 <DialogActions>
                     <Button onClick={handleClose} color='primary'>

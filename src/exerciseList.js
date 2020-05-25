@@ -5,7 +5,7 @@ export default [
     { id: uuid(), name: 'Wall Sit' },
     { id: uuid(), name: 'Push-ups' },
     { id: uuid(), name: 'Sit-ups' },
-    { id: uuid(), name: 'Step Up Onto Chair' },
+    { alert: 'Switch Sides', id: uuid(), name: 'Step Up Onto Chair' },
     { id: uuid(), name: 'Squats' },
     { id: uuid(), name: 'Tricep-dips' },
     { id: uuid(), name: 'Plank' },

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
@@ -20,29 +21,44 @@ export default function SwipeableTemporaryDrawer(props) {
         addNew,
         openSettingsWindow,
         openConfirmPopup,
+        openVoxPopup,
         removeExercise,
         editExercise,
     } = props;
     const len = exerciseList.length;
     const classes = useStyles();
-    const [state, setState] = React.useState(false);
+    const [state, setState] = useState(false);
+    const [isBtnVisible, setBtnOn] = useState(0);
+
+    const minHeight = 187;
+    const resetBtnHeight = 44;
+    // const addExerciseBtnHeight = 47;
+
+    // component did mount hook
+    useEffect(() => {
+        const addedHeight = 44 * exerciseList.length;
+        if (minHeight + addedHeight + resetBtnHeight > window.innerHeight) {
+            setBtnOn(1);
+        } else {
+            setBtnOn(0);
+        }
+    }, [setBtnOn, exerciseList]);
 
     const toggleDrawer = (open) => (event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
         setState(open);
     };
 
     return (
         <div>
             <Button className={classes.btn} onClick={toggleDrawer(true)}>
-                Customize Your Workout
+                Customize Your Workouts
             </Button>
 
             <SwipeableDrawer open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
-                <div className={classes.list} role='presentation'>
+                <div id='exercise-list' className={classes.list} role='presentation'>
                     <div className={classes.sidebarHeader}>
                         <h1 className={classes.sidebarTitle}>Your Workout</h1>
                         <ChevronLeftIcon
@@ -89,10 +105,15 @@ export default function SwipeableTemporaryDrawer(props) {
                             commonProps={{
                                 removeExercise: removeExercise,
                                 editExercise: editExercise,
+                                openVoxPopup: openVoxPopup,
                             }}
                         />
                     </List>
-
+                    {isBtnVisible ? (
+                        <div className={classes.sidebarAddNew2} onClick={addNew}>
+                            Add New Exercise
+                        </div>
+                    ) : null}
                     <div className={classes.sidebarReset} onClick={openConfirmPopup}>
                         RESET EXERCISES
                     </div>

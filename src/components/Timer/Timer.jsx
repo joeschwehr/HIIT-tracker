@@ -16,9 +16,11 @@ export default function Timer(props) {
         setPrecount,
         nextExercise,
         currentExercise,
+        currentAlert,
         workoutInterval,
         isMuted,
         reset,
+        updateRestarting,
     } = props;
 
     const [isRunning, setIsRunning] = useState(false);
@@ -73,12 +75,8 @@ export default function Timer(props) {
             return;
         }
 
-        if (
-            !isResting &&
-            currentExercise.toLowerCase() === 'step up onto chair' &&
-            timeRemaining === Math.ceil(workoutInterval / 2) + 2
-        ) {
-            textToSpeech(isMuted, 'Switch sides.', voice1);
+        if (timeRemaining === Math.ceil(workoutInterval / 2) + 2 && !isResting && currentAlert) {
+            textToSpeech(isMuted, currentAlert, voice1);
             setSeconds(seconds + 1);
             return;
         }
@@ -127,7 +125,7 @@ export default function Timer(props) {
         setSeconds(seconds + 1);
     }, [
         seconds,
-        currentExercise,
+        currentAlert,
         runTime,
         timeRemaining,
         precount,
@@ -183,6 +181,7 @@ export default function Timer(props) {
 
     const start = () => {
         setIsRunning(true);
+        updateRestarting();
     };
 
     const stop = () => {
@@ -308,16 +307,16 @@ export default function Timer(props) {
                     },
                     interactivity: {
                         events: {
-                            onclick: {
-                                enable: false,
-                                mode: 'push',
+                            onhover: {
+                                enable: true,
+                                mode: 'repulse',
                             },
                         },
-                        modes: {
-                            push: {
-                                particles_nb: 1,
-                            },
-                        },
+                        // modes: {
+                        //     push: {
+                        //         particles_nb: 1,
+                        //     },
+                        // },
                     },
                     retina_detect: true,
                 }}

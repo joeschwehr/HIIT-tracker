@@ -66,6 +66,18 @@ export default makeStyles({
     sidebarTitle: {
         cursor: 'default',
         margin: 0,
+        marginRight: 5,
+        whiteSpace: 'nowrap',
+
+        '@media (max-width: 300px)': {
+            marginRight: 10,
+            fontSize: 30,
+        },
+
+        '@media (max-width: 250px)': {
+            marginRight: 5,
+            fontSize: 24,
+        },
     },
     sidebarSubitle: {
         textTransform: 'uppercase',
@@ -128,6 +140,29 @@ export default makeStyles({
     sidebarAddNew: {
         marginTop: '10px',
         marginBottom: '-6px',
+        height: '44px',
+        fontWeight: 500,
+        padding: '0 20px',
+        display: 'flex',
+        alignItems: 'center',
+        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 1px 2px 0px',
+        textTransform: 'uppercase',
+        fontSize: '.7rem',
+        letterSpacing: '.1rem',
+        color: 'rgba(255, 255, 255, 0.527)',
+        justifyContent: 'center',
+        transition: 'all .3s',
+
+        '&:hover': {
+            color: 'white',
+            backgroundColor: 'rgba(255, 255, 255, .15)',
+            cursor: 'pointer',
+        },
+    },
+
+    sidebarAddNew2: {
+        marginTop: '0px',
+        marginBottom: '3px',
         height: '44px',
         fontWeight: 500,
         padding: '0 20px',
