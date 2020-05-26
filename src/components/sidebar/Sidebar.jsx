@@ -54,7 +54,7 @@ export default function SwipeableTemporaryDrawer(props) {
     return (
         <div>
             <Button className={classes.btn} onClick={toggleDrawer(true)}>
-                Customize Your Workouts
+                Customize Your Workout
             </Button>
 
             <SwipeableDrawer open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
