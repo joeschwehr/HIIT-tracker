@@ -1,3 +1,7 @@
+High Intensity Interval Training App that allows for full customization of workouts. 7-minute-workout is loaded by default.
+
+
+********************************
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
