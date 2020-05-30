@@ -7,23 +7,19 @@ export default makeStyles({
         padding: '0 30px 10px 30px',
 
         '@media (max-width: 425px)': {
-            width: 350,
+            width: '82vw',
         },
 
-        '@media (max-width: 405px)': {
-            width: 300,
-        },
-
-        '@media (max-width: 350px)': {
-            width: 260,
+        '@media (max-width: 365px)': {
+            width: '78vw',
         },
 
         '@media (max-width: 300px)': {
-            width: 220,
+            width: '75vw',
         },
 
         '@media (max-width: 250px)': {
-            width: 170,
+            width: '70vw',
         },
     },
     btn: {
@@ -106,6 +102,10 @@ export default makeStyles({
         '&:hover': {
             color: 'white',
             cursor: 'pointer',
+        },
+
+        '@media (max-width: 1368px)': {
+            color: 'rgba(255, 255, 255, 0.6)',
         },
     },
 
